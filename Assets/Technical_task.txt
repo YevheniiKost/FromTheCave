@@ -1,0 +1,45 @@
+Player :
+ -PlayerController 
+   {
+   Moving();
+   Run();
+   ClimbTheLeather();
+   }
+ -PlayerInput
+ -PlayerHealth
+ -PlayerCombat
+   {
+   AttackMelee();
+   AttackRange();
+   }
+ 
+Environment:
+-Platforms:
+  --Static
+  --Movable
+-Traps:
+  --Lava
+  --Spikes
+  --Falling Stones
+  
+Level
+- Start
+- End
+
+Enemies
+ -EnemyHealth
+ -EnemyCombat:
+  --Melee
+  --Range
+  --Non-attack
+    
+UI:
+ Player Health 
+ Scores
+ Keys
+
+GameManager
+
+InteractiveItems:
+ Food for health
+ keys to open the door
