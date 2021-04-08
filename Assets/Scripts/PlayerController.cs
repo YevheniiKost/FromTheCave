@@ -1,55 +1,85 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movemevt options")]
     [SerializeField] private float _horizontalSpeed = 10f;
     [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private float _flightSpeedReduser = 0.5f;
+    [SerializeField] private float _ladderClimbingSpeed = 1f;
 
     [Header("Environment check properties")]
     [SerializeField] private float _groundDistance = 1f;
     [SerializeField] private float _footOffeset = 1f;
     [SerializeField] private LayerMask _groundMask;
 
+    [Header("Developer")]
     [SerializeField] private bool _drawDebugRaycasts = true;
 
     private bool _isOnGround;
-    private bool _isJumping;
+    private bool _isClimbing;
     private int _direction = 1;
     private float _originalScale;
+    private float _originalGravityScale;
 
     private Rigidbody2D rb;
-    private CapsuleCollider2D collider;
+    private CapsuleCollider2D _collider;
     private PlayerInput input;
+    
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<CapsuleCollider2D>();
+        _collider = GetComponent<CapsuleCollider2D>();
         input = GetComponent<PlayerInput>();
     }
 
     void Start()
     {
         _originalScale = transform.localScale.x;
+        _originalGravityScale = rb.gravityScale;
     }
 
     void Update()
     {
-        PhysicsCheck();
         Jumping();
     }
 
     private void FixedUpdate()
     {
-       
+        PhysicsCheck();
         GroundMovement();
-        
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        ClimbingTheLadder(collision);
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            _isClimbing = false;
+        }
+    }
 
+    private void PhysicsCheck()
+    {
+        RaycastHit2D rightLegGroundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
+        RaycastHit2D leftLegGroundCheck = Raycast(new Vector2(-_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
+
+        if (rightLegGroundCheck || leftLegGroundCheck)
+            _isOnGround = true;
+        else
+            _isOnGround = false;
+
+        if(!_isClimbing)
+            rb.gravityScale = _originalGravityScale;
+    }
     private void GroundMovement()
     {
         float xVelocity = _horizontalSpeed * input.HorizontalInput;
@@ -60,7 +90,13 @@ public class PlayerController : MonoBehaviour
         }
 
         if (_isOnGround)
+        {
             rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(xVelocity * _flightSpeedReduser, rb.velocity.y);
+        }
     }
 
     private void Jumping()
@@ -71,15 +107,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    private void PhysicsCheck()
+    private void ClimbingTheLadder(Collider2D collider)
     {
-        RaycastHit2D groundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
-
-        if (groundCheck)
-            _isOnGround = true;
-        else
-            _isOnGround = false;
+        if (collider.CompareTag("Ladder") && Mathf.Abs(input.VerticalInput) > 0)
+        {
+            rb.gravityScale = 0;
+            transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
+            _isClimbing = true;
+        }
     }
 
     private void FlipCharacterDirection()

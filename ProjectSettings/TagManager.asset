@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 2151291171
+    locked: 0
+  - name: Props
+    uniqueID: 1206775481
     locked: 0
   - name: Player
     uniqueID: 138481553
