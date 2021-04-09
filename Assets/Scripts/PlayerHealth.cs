@@ -1,18 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int _startHealth;
+    [SerializeField] private int _maxHealth;
+
+    public bool IsCharacterDead;
+
+    private int _currentPlayerHealth;
+
+    public void ModifyHealth(int amount)
     {
-        
+        if (_currentPlayerHealth == _maxHealth && amount > 0)
+            return;
+
+        if (amount > _maxHealth - _currentPlayerHealth)
+            amount = _maxHealth - _currentPlayerHealth;
+
+        if (_currentPlayerHealth + amount <= 0)
+            StartDeathSequence();
+
+        _currentPlayerHealth += amount;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void KillImmidiately()
     {
-        
+        if (!IsCharacterDead)
+        {
+            _currentPlayerHealth = 0;
+            StartDeathSequence();
+        }
+    }
+
+    private void Start()
+    {
+        IsCharacterDead = false;
+    }
+
+    private void StartDeathSequence()
+    {
+        IsCharacterDead = true;
     }
 }

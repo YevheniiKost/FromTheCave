@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 74663588211003538}
   - component: {fileID: 74663588211003549}
   - component: {fileID: 3674874407157062819}
+  - component: {fileID: 1321541494}
   m_Layer: 0
   m_Name: PrototypeHero_noSword_0
   m_TagString: Untagged
@@ -95,6 +96,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _drawDebugRaycasts: 1
+  IsOnGround: 0
+  IsClimbing: 0
 --- !u!114 &74663588211003549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +122,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f84c7d10c10b541a1bb524f423382a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 5681546608494765121}
+--- !u!114 &1321541494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74663588211003540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576b1b28f9fc09c498ba10f122aaafe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startHealth: 2
+  _maxHealth: 4
+  IsCharacterDead: 0
 --- !u!1 &8640544343056157582
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +149,6 @@ GameObject:
   - component: {fileID: 1142692238335866698}
   - component: {fileID: 3579086197181138518}
   - component: {fileID: 5681546608494765121}
-  - component: {fileID: 420648395}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -221,18 +239,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &420648395
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8640544343056157582}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d51773bfca287244287f88e3b58ae10e, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0

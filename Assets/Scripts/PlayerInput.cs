@@ -44,8 +44,11 @@ public class PlayerInput : MonoBehaviour
 
     private void ProcessInput()
     {
-        _horizontalInput += Input.GetAxis("Horizontal");
-        _verticalInput += Input.GetAxis("Vertical");
-        _jump = Input.GetButtonDown("Jump");
+        if (!GetComponent<PlayerHealth>().IsCharacterDead)
+        {
+            _horizontalInput += Input.GetAxis("Horizontal");
+            _verticalInput += Input.GetAxis("Vertical");
+            _jump = Input.GetButtonDown("Jump");
+        }
     }
 }

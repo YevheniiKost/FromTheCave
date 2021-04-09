@@ -70,6 +70,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+      if (collision.collider.gameObject.layer == 8)
+        {
+            Debug.Log("Here");
+            if (IsClimbing && input.VerticalInput < 0)
+            {
+                collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
+            }
+            else
+            {
+                collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
+            }
+        }
+    }
+   
+
     private void PhysicsCheck()
     {
         RaycastHit2D rightLegGroundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
@@ -117,6 +134,9 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0;
             transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
             IsClimbing = true;
+        }else if(input.VerticalInput ==0 && IsOnGround)
+        {
+            IsClimbing = false;
         }
     }
 

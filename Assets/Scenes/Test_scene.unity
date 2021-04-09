@@ -219,12 +219,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!95 &420648396 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5681546608494765121, guid: db9d72e6089d9dc4287374689d6cd01e,
-    type: 3}
-  m_PrefabInstance: {fileID: 74663586957103077}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +331,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5, y: -1.98, z: -10}
+  m_LocalPosition: {x: -4.4, y: 0.888, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -479,7 +473,7 @@ GameObject:
   - component: {fileID: 878036714}
   m_Layer: 8
   m_Name: Platforms
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7756,6 +7750,7 @@ GameObject:
   - component: {fileID: 1565505087}
   - component: {fileID: 1565505086}
   - component: {fileID: 1565505085}
+  - component: {fileID: 1565505090}
   m_Layer: 0
   m_Name: Lava
   m_TagString: Untagged
@@ -8259,6 +8254,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1565505090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565505083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac352d7be8475d4fb2edfb117358bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1728422028
 GameObject:
   m_ObjectHideFlags: 3
@@ -10263,7 +10270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130692291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5, y: -1.98, z: -10}
+  m_LocalPosition: {x: -4.4, y: 0.888, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1728422029}
@@ -10285,12 +10292,12 @@ PrefabInstance:
     - target: {fileID: 74663588211003537, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.5
+      value: -4.4
       objectReference: {fileID: 0}
     - target: {fileID: 74663588211003537, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.98
+      value: 0.888
       objectReference: {fileID: 0}
     - target: {fileID: 74663588211003537, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
@@ -10335,13 +10342,7 @@ PrefabInstance:
     - target: {fileID: 74663588211003540, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
       propertyPath: m_Name
-      value: PrototypeHero_noSword_0
+      value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3674874407157062819, guid: db9d72e6089d9dc4287374689d6cd01e,
-        type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 420648396}
-    m_RemovedComponents:
-    - {fileID: 420648395, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
