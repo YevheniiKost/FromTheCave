@@ -19,8 +19,11 @@ public class PlayerController : MonoBehaviour
     [Header("Developer")]
     [SerializeField] private bool _drawDebugRaycasts = true;
 
-    private bool _isOnGround;
-    private bool _isClimbing;
+    [HideInInspector]
+    public bool IsOnGround;
+    [HideInInspector]
+    public bool IsClimbing;
+
     private int _direction = 1;
     private float _originalScale;
     private float _originalGravityScale;
@@ -63,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
-            _isClimbing = false;
+            IsClimbing = false;
         }
     }
 
@@ -73,11 +76,11 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D leftLegGroundCheck = Raycast(new Vector2(-_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
 
         if (rightLegGroundCheck || leftLegGroundCheck)
-            _isOnGround = true;
+            IsOnGround = true;
         else
-            _isOnGround = false;
+            IsOnGround = false;
 
-        if(!_isClimbing)
+        if(!IsClimbing)
             rb.gravityScale = _originalGravityScale;
     }
     private void GroundMovement()
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour
             FlipCharacterDirection();
         }
 
-        if (_isOnGround)
+        if (IsOnGround)
         {
             rb.velocity = new Vector2(xVelocity, rb.velocity.y);
         }
@@ -101,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jumping()
     {
-        if (_isOnGround && input.JumpInput)
+        if (IsOnGround && input.JumpInput)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
         }
@@ -113,7 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 0;
             transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
-            _isClimbing = true;
+            IsClimbing = true;
         }
     }
 
