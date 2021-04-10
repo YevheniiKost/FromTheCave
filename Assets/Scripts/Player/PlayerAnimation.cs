@@ -14,6 +14,8 @@ public class PlayerAnimation : MonoBehaviour
     private int _jumpingParamID;
     private int _climbingParamID;
     private int _deathParamID;
+    private int _hitParamID;
+    private int _strikeParamID;
 
     private bool _isRunning;
     private bool _isJumping;
@@ -22,23 +24,37 @@ public class PlayerAnimation : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerController>();
+        GetComponent<PlayerHealth>().Hit += PlayHitAnimation;
+        GetComponent<PlayerCombat>().Strike += PlayStrikeAnimation;
     }
     private void Start()
     {
-        _runningParamID = Animator.StringToHash("IsRunning");
-        _jumpingParamID = Animator.StringToHash("IsJumping");
-        _climbingParamID = Animator.StringToHash("IsClimbing");
-        _deathParamID = Animator.StringToHash("IsDead");
+        SetParametersID();
     }
 
     private void Update()
     {
         CatchTheVelocity();
 
+        SetAnimatorParameters();
+    }
+
+    private void SetAnimatorParameters()
+    {
         animator.SetBool(_climbingParamID, controller.IsClimbing);
         animator.SetBool(_runningParamID, _isRunning);
         animator.SetBool(_jumpingParamID, _isJumping);
         animator.SetBool(_deathParamID, GetComponent<PlayerHealth>().IsCharacterDead);
+    }
+
+    private void SetParametersID()
+    {
+        _runningParamID = Animator.StringToHash("IsRunning");
+        _jumpingParamID = Animator.StringToHash("IsJumping");
+        _climbingParamID = Animator.StringToHash("IsClimbing");
+        _deathParamID = Animator.StringToHash("IsDead");
+        _hitParamID = Animator.StringToHash("IsHit");
+        _strikeParamID = Animator.StringToHash("Attack");
     }
 
     private void CatchTheVelocity()
@@ -62,5 +78,14 @@ public class PlayerAnimation : MonoBehaviour
             _isJumping = false;
             _isRunning = false;
         }
+    }
+
+    private void PlayStrikeAnimation()
+    {
+        animator.SetTrigger(_strikeParamID);
+    }
+    private void PlayHitAnimation()
+    {
+        animator.SetTrigger(_hitParamID);
     }
 }

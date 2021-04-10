@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     [Header("Environment check properties")]
     [SerializeField] private float _groundDistance = 1f;
     [SerializeField] private float _footOffeset = 1f;
+    [SerializeField] private float _ladderCheckOffcest = .5f;
     [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private LayerMask _ladderMask;
 
     [Header("Developer")]
     [SerializeField] private bool _drawDebugRaycasts = true;
@@ -23,7 +25,10 @@ public class PlayerController : MonoBehaviour
     public bool IsOnGround;
     [HideInInspector]
     public bool IsClimbing;
+    [HideInInspector]
+    public bool IsJumping;
 
+    private bool _isOnLadder;
     private int _direction = 1;
     private float _originalScale;
     private float _originalGravityScale;
@@ -72,33 +77,58 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-      if (collision.collider.gameObject.layer == 8)
+        ChangeRotationalOffcetOfPlatform(collision);
+    }
+
+    private void ChangeRotationalOffcetOfPlatform(Collision2D collision)
+    {
+        if (collision.collider.gameObject.layer == 9)
         {
-            Debug.Log("Here");
+            
             if (IsClimbing && input.VerticalInput < 0)
             {
                 collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
             }
-            else
+            else 
             {
                 collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
             }
         }
+        else if(collision.collider.GetComponent<PlatformEffector2D>())
+        {
+            collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
+        }
     }
-   
 
     private void PhysicsCheck()
     {
         RaycastHit2D rightLegGroundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
         RaycastHit2D leftLegGroundCheck = Raycast(new Vector2(-_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
+       
 
-        if (rightLegGroundCheck || leftLegGroundCheck)
+        if (rightLegGroundCheck || leftLegGroundCheck )
+        {
             IsOnGround = true;
-        else
+            IsJumping = false;
+        }
+        else if (!IsClimbing)
+        {
             IsOnGround = false;
+            IsJumping = false;
+        }
+        else
+        {
+            IsOnGround = false;
+        }
 
         if(!IsClimbing)
             rb.gravityScale = _originalGravityScale;
+
+        if (Raycast(new Vector2(_ladderCheckOffcest * _direction, _ladderCheckOffcest), Vector2.left * _direction, .5f, _ladderMask))
+        {
+            _isOnLadder = true;
+        }
+        else { _isOnLadder = false; }
     }
     private void GroundMovement()
     {
@@ -121,22 +151,36 @@ public class PlayerController : MonoBehaviour
 
     private void Jumping()
     {
-        if (IsOnGround && input.JumpInput)
+        if (IsOnGround && input.JumpInput && !IsClimbing)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
+            IsJumping = true;
         }
     }
 
     private void ClimbingTheLadder(Collider2D collider)
     {
-        if (collider.CompareTag("Ladder") && Mathf.Abs(input.VerticalInput) > 0)
-        {
-            rb.gravityScale = 0;
-            transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
-            IsClimbing = true;
-        }else if(input.VerticalInput ==0 && IsOnGround)
-        {
-            IsClimbing = false;
+        if (collider.CompareTag("Ladder") && !IsJumping) {
+            if ((input.VerticalInput > 0 && _isOnLadder && IsOnGround) || (input.VerticalInput > 0 && !IsOnGround && _isOnLadder)
+                || (input.VerticalInput > 0))
+            {
+                rb.gravityScale = 0;
+                transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
+               // rb.velocity += Vector2.up * _ladderClimbingSpeed;
+                IsClimbing = true;
+                IsJumping = false;
+            } else if (collider.CompareTag("Ladder") && input.VerticalInput < 0)
+            {
+                rb.gravityScale = 0;
+                transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
+               // rb.velocity += Vector2.down * _ladderClimbingSpeed;
+                IsClimbing = true;
+                IsJumping = false;
+            }
+            else if (input.VerticalInput == 0 && IsOnGround)
+            {
+                IsClimbing = false;
+            } 
         }
     }
 

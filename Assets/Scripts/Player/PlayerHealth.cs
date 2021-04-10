@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public delegate void CharacterHit();
+
+    public event CharacterHit Hit;
+
     [SerializeField] private int _startHealth;
     [SerializeField] private int _maxHealth;
 
@@ -23,6 +27,9 @@ public class PlayerHealth : MonoBehaviour
         if (_currentPlayerHealth + amount <= 0)
             StartDeathSequence();
 
+        if (amount < 0)
+            Hit?.Invoke();
+
         _currentPlayerHealth += amount;
     }
 
@@ -38,6 +45,15 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         IsCharacterDead = false;
+        _currentPlayerHealth = _startHealth;
+    }
+
+    private void Update()
+    {
+        if(_currentPlayerHealth <= 0)
+        {
+            StartDeathSequence();
+        }
     }
 
     private void StartDeathSequence()

@@ -8,12 +8,15 @@ public class PlayerInput : MonoBehaviour
     private float _horizontalInput;
     private bool _jump;
     private float _verticalInput;
+    private bool _strike;
 
     private bool _readyToClear;
 
     public float HorizontalInput { get => _horizontalInput; private set => _ = _horizontalInput; }
     public float VerticalInput { get => _verticalInput; private set => _ = _verticalInput; }
     public bool JumpInput { get => _jump; private set => _ = _jump; }
+    public bool Strike { get => _strike;private set => _ = _strike; }
+
 
 
     void Update()
@@ -49,6 +52,7 @@ public class PlayerInput : MonoBehaviour
             _horizontalInput += Input.GetAxis("Horizontal");
             _verticalInput += Input.GetAxis("Vertical");
             _jump = Input.GetButtonDown("Jump");
+            _strike = Input.GetButtonDown("Fire1");
         }
     }
 }
