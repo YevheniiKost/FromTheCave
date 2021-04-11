@@ -25,7 +25,7 @@ public class PlayerCombat : MonoBehaviour
     private RuntimeAnimatorController _controllerBase;
     private Animator animator;
     private PlayerInput input;
-    private float _nexAttackTime = 0f;
+    private float _nextAttackTime = 0f;
 
     
 
@@ -43,6 +43,7 @@ public class PlayerCombat : MonoBehaviour
     {
         UpdateAnimation();
         ProcessStrikes();
+        _nextAttackTime += Time.deltaTime;
     }
 
     private void ProcessStrikes()
@@ -50,7 +51,7 @@ public class PlayerCombat : MonoBehaviour
         float currentAttacRange = IsHasSword ? _swordAttackRange : _kickAttackRange;
         int currentDamage = IsHasSword ? _swordDamage : _noWeaponDamage;
 
-        if (input.Strike && Time.time >= _nexAttackTime)
+        if (input.Strike && _nextAttackTime >= _meeleAttackRate)
         {
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, currentAttacRange, _enemyLayer);
 
@@ -62,7 +63,8 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
 
-            _nexAttackTime = Time.time + 1f / _meeleAttackRate;
+            _nextAttackTime = 0;
+           
             Strike?.Invoke();
         }
     }
