@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public delegate void StrikeHandler();
+    public delegate void Action();
 
-    public event StrikeHandler Strike;
+    public event Action OnStrike;
 
     [SerializeField] private int _noWeaponDamage = 10;
     [SerializeField] private int _swordDamage = 50;
@@ -27,7 +27,13 @@ public class PlayerCombat : MonoBehaviour
     private PlayerInput input;
     private float _nextAttackTime = 0f;
 
-    
+    public void GetSword()
+    {
+        if (!IsHasSword)
+        {
+            IsHasSword = true;
+        }
+    }
 
     private void Awake()
     {
@@ -65,7 +71,7 @@ public class PlayerCombat : MonoBehaviour
 
             _nextAttackTime = 0;
            
-            Strike?.Invoke();
+            OnStrike?.Invoke();
         }
     }
 

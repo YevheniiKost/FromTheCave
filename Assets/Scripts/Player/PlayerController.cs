@@ -161,19 +161,16 @@ public class PlayerController : MonoBehaviour
     private void ClimbingTheLadder(Collider2D collider)
     {
         if (collider.CompareTag("Ladder") && !IsJumping) {
-            if ((input.VerticalInput > 0 && _isOnLadder && IsOnGround) || (input.VerticalInput > 0 && !IsOnGround && _isOnLadder)
-                || (input.VerticalInput > 0))
+            if ((input.VerticalInput > 0) && Mathf.Abs(rb.velocity.y) < .05f)
             {
                 rb.gravityScale = 0;
                 transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
-               // rb.velocity += Vector2.up * _ladderClimbingSpeed;
                 IsClimbing = true;
                 IsJumping = false;
-            } else if (collider.CompareTag("Ladder") && input.VerticalInput < 0)
+            } else if (input.VerticalInput < 0)
             {
                 rb.gravityScale = 0;
                 transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
-               // rb.velocity += Vector2.down * _ladderClimbingSpeed;
                 IsClimbing = true;
                 IsJumping = false;
             }

@@ -5,20 +5,30 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public delegate void Action();
+
+    public event Action OnGetHit;
+    public event Action OnDead;
+
     [SerializeField] private float _startHealth;
 
+    public bool IsDead;
+
     private float _currentHealth;
-    private bool _isDead;
 
     public void GetHit(int amount)
     {
-        _currentHealth -= amount;
+        if (!IsDead)
+        {
+            _currentHealth -= amount;
+            OnGetHit?.Invoke();
+        }
     }
 
     void Start()
     {
         _currentHealth = _startHealth;
-        _isDead = false;
+        IsDead = false;
     }
 
     void Update()
@@ -31,7 +41,9 @@ public class EnemyHealth : MonoBehaviour
 
     private void StartDeath()
     {
-        _isDead = true;
+        IsDead = true;
+        GetComponent<EnemyMovement>().enabled = false;
+        OnDead.Invoke();
     }
 
     

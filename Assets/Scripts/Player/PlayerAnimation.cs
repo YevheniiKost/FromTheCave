@@ -24,8 +24,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerController>();
-        GetComponent<PlayerHealth>().Hit += PlayHitAnimation;
-        GetComponent<PlayerCombat>().Strike += PlayStrikeAnimation;
+        GetComponent<PlayerHealth>().OnHit += PlayHitAnimation;
+        GetComponent<PlayerCombat>().OnStrike += PlayStrikeAnimation;
     }
     private void Start()
     {

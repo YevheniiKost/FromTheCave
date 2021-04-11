@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public delegate void CharacterHit();
+    public delegate void Action();
 
-    public event CharacterHit Hit;
+    public event Action OnHit;
 
     [SerializeField] private int _startHealth;
     [SerializeField] private int _maxHealth;
@@ -18,19 +18,22 @@ public class PlayerHealth : MonoBehaviour
 
     public void ModifyHealth(int amount)
     {
-        if (_currentPlayerHealth == _maxHealth && amount > 0)
-            return;
+        if (!IsCharacterDead)
+        {
+            if (_currentPlayerHealth == _maxHealth && amount > 0)
+                return;
 
-        if (amount > _maxHealth - _currentPlayerHealth)
-            amount = _maxHealth - _currentPlayerHealth;
+            if (amount > _maxHealth - _currentPlayerHealth)
+                amount = _maxHealth - _currentPlayerHealth;
 
-        if (_currentPlayerHealth + amount <= 0)
-            StartDeathSequence();
+            if (_currentPlayerHealth + amount <= 0)
+                StartDeathSequence();
 
-        if (amount < 0)
-            Hit?.Invoke();
+            if (amount < 0)
+                OnHit?.Invoke();
 
-        _currentPlayerHealth += amount;
+            _currentPlayerHealth += amount;
+        }
     }
 
     public void KillImmidiately()

@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 74663588211003549}
   - component: {fileID: 3674874407157062819}
   - component: {fileID: 1321541494}
-  m_Layer: 0
-  m_Name: PrototypeHero_noSword_0
+  - component: {fileID: 2071135574}
+  m_Layer: 11
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,10 +97,10 @@ MonoBehaviour:
   _ladderCheckOffcest: 0.5
   _groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   _ladderMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   _drawDebugRaycasts: 1
   IsOnGround: 0
   IsClimbing: 0
@@ -144,6 +145,32 @@ MonoBehaviour:
   _startHealth: 2
   _maxHealth: 4
   IsCharacterDead: 0
+--- !u!114 &2071135574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74663588211003540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4069b10605045f4b85347657883fea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _noWeaponDamage: 10
+  _swordDamage: 50
+  _bowDamage: 30
+  _kickAttackRange: 0.3
+  _swordAttackRange: 0.8
+  _meeleAttackRate: 0.2
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _attackPoint: {fileID: 6459458758883190601}
+  _swordAnimController: {fileID: 22100000, guid: 9cd9d29379a1f1743a5b2e60c993328c,
+    type: 2}
+  IsHasSword: 0
+  IsHasBow: 0
 --- !u!1 &4676689399561506664
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6459458758883190601}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4676689399561506664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.488, y: 0.711, z: 0}
+  m_LocalPosition: {x: 0.342, y: 0.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 74663588211003537}
@@ -185,7 +212,7 @@ GameObject:
   - component: {fileID: 1142692238335866698}
   - component: {fileID: 3579086197181138518}
   - component: {fileID: 5681546608494765121}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +277,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.24, y: 0.3}
+  m_Size: {x: 1.28, y: 0.96}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public delegate void Atcion();
+
+    public event Atcion OnAttack;
+
     [SerializeField] private float _movingSpeed = 1f;
-    [SerializeField] private int _attackDamage = 10;
+    [SerializeField] private int _attackDamage = 1;
+    [SerializeField] private float _attackRate = .5f;
 
     [SerializeField] private float _meeleAttackDistance = 1f;
     [SerializeField] private float _chasingDistance = 5f;
 
+    [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _patrollingPointA;
     [SerializeField] private Transform _patrollingPointB;
     [SerializeField] private float _waypointTolerance;
@@ -21,6 +27,7 @@ public class EnemyMovement : MonoBehaviour
     private PlayerHealth _player;
     private int _direction = 1;
     private float _originalScale;
+    private float _timeToNextAttack;
 
     private void Awake()
     {
@@ -33,7 +40,6 @@ public class EnemyMovement : MonoBehaviour
         _originalScale = transform.localScale.x;
 
         _currentWaypoint = _patrollingPointA;
-       // transform.position = _patrollingPointA.position;
 
         _currentState = EnemyState.Patroling;
     }
@@ -105,8 +111,35 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Attack");
+            ProcessAttack();
         }
+    }
+
+    private void ProcessAttack()
+    {
+        _timeToNextAttack += Time.deltaTime;
+        if(_timeToNextAttack >= _attackRate)
+        {
+            Attack();
+            _timeToNextAttack = 0;
+        }
+
+    }
+
+    private void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _meeleAttackDistance);
+
+        foreach (var enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent(out PlayerHealth playerHit))
+            {
+                playerHit.ModifyHealth(-_attackDamage);
+            }
+        }
+
+
+        OnAttack?.Invoke();
     }
 
     private void MoveToTarget(Vector2 target)
