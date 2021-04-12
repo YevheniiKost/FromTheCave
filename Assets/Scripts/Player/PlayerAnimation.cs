@@ -16,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour
     private int _deathParamID;
     private int _hitParamID;
     private int _strikeParamID;
+    private int _rangeStrikeParamID;
 
     private bool _isRunning;
     private bool _isJumping;
@@ -26,7 +27,10 @@ public class PlayerAnimation : MonoBehaviour
         controller = GetComponent<PlayerController>();
         GetComponent<PlayerHealth>().OnHit += PlayHitAnimation;
         GetComponent<PlayerCombat>().OnStrike += PlayStrikeAnimation;
+        GetComponent<PlayerCombat>().OnRangeStrike += PlayRangeStrikeAnimation;
     }
+
+
     private void Start()
     {
         SetParametersID();
@@ -55,6 +59,7 @@ public class PlayerAnimation : MonoBehaviour
         _deathParamID = Animator.StringToHash("IsDead");
         _hitParamID = Animator.StringToHash("IsHit");
         _strikeParamID = Animator.StringToHash("Attack");
+        _rangeStrikeParamID = Animator.StringToHash("RangeAttack");
     }
 
     private void CatchTheVelocity()
@@ -87,5 +92,10 @@ public class PlayerAnimation : MonoBehaviour
     private void PlayHitAnimation()
     {
         animator.SetTrigger(_hitParamID);
+    }
+
+    private void PlayRangeStrikeAnimation()
+    {
+        animator.SetTrigger(_rangeStrikeParamID);
     }
 }

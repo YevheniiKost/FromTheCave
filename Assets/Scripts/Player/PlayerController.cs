@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [Header("Environment check properties")]
     [SerializeField] private float _groundDistance = 1f;
     [SerializeField] private float _footOffeset = 1f;
-    [SerializeField] private float _ladderCheckOffcest = .5f;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private LayerMask _ladderMask;
 
@@ -25,10 +24,7 @@ public class PlayerController : MonoBehaviour
     public bool IsOnGround;
     [HideInInspector]
     public bool IsClimbing;
-    [HideInInspector]
-    public bool IsJumping;
 
-    private bool _isOnLadder;
     private int _direction = 1;
     private float _originalScale;
     private float _originalGravityScale;
@@ -77,26 +73,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        ChangeRotationalOffcetOfPlatform(collision);
+        ChangePlatformProperties(collision);
     }
 
-    private void ChangeRotationalOffcetOfPlatform(Collision2D collision)
+    private void ChangePlatformProperties(Collision2D collision)
     {
-        if (collision.collider.gameObject.layer == 9)
+       if (IsClimbing && input.VerticalInput < 0)
+       {
+            ChangeRotationalOffcetOfPlatforms(180, collision);
+       }
+       else 
+       {
+            ChangeRotationalOffcetOfPlatforms(0, collision);
+       }
+    }
+
+    private void ChangeRotationalOffcetOfPlatforms(float degrees, Collision2D collision)
+    {
+        foreach (var collider in collision.contacts)
         {
-            
-            if (IsClimbing && input.VerticalInput < 0)
+            if(collider.collider.TryGetComponent(out PlatformEffector2D platform) && collider.collider.gameObject.layer == 9)
             {
-                collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
+                platform.rotationalOffset = degrees;
             }
-            else 
-            {
-                collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
-            }
-        }
-        else if(collision.collider.GetComponent<PlatformEffector2D>())
-        {
-            collision.collider.GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
         }
     }
 
@@ -109,14 +108,8 @@ public class PlayerController : MonoBehaviour
         if (rightLegGroundCheck || leftLegGroundCheck )
         {
             IsOnGround = true;
-            IsJumping = false;
         }
-        else if (!IsClimbing)
-        {
-            IsOnGround = false;
-            IsJumping = false;
-        }
-        else
+        else 
         {
             IsOnGround = false;
         }
@@ -124,11 +117,6 @@ public class PlayerController : MonoBehaviour
         if(!IsClimbing)
             rb.gravityScale = _originalGravityScale;
 
-        if (Raycast(new Vector2(_ladderCheckOffcest * _direction, _ladderCheckOffcest), Vector2.left * _direction, .5f, _ladderMask))
-        {
-            _isOnLadder = true;
-        }
-        else { _isOnLadder = false; }
     }
     private void GroundMovement()
     {
@@ -154,25 +142,22 @@ public class PlayerController : MonoBehaviour
         if (IsOnGround && input.JumpInput && !IsClimbing)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
-            IsJumping = true;
         }
     }
 
     private void ClimbingTheLadder(Collider2D collider)
     {
-        if (collider.CompareTag("Ladder") && !IsJumping) {
+        if (collider.CompareTag("Ladder")) {
             if ((input.VerticalInput > 0) && Mathf.Abs(rb.velocity.y) < .05f)
             {
                 rb.gravityScale = 0;
                 transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
                 IsClimbing = true;
-                IsJumping = false;
             } else if (input.VerticalInput < 0)
             {
                 rb.gravityScale = 0;
                 transform.position += Vector3.up * input.VerticalInput * _ladderClimbingSpeed * Time.deltaTime;
                 IsClimbing = true;
-                IsJumping = false;
             }
             else if (input.VerticalInput == 0 && IsOnGround)
             {

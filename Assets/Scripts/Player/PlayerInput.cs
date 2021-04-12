@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     private bool _jump;
     private float _verticalInput;
     private bool _strike;
+    private bool _rangeStrike;
 
     private bool _readyToClear;
 
@@ -16,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     public float VerticalInput { get => _verticalInput; private set => _ = _verticalInput; }
     public bool JumpInput { get => _jump; private set => _ = _jump; }
     public bool Strike { get => _strike;private set => _ = _strike; }
+    public bool RangeStrike { get => _rangeStrike; private set => _ = _rangeStrike; }
 
 
 
@@ -53,6 +55,7 @@ public class PlayerInput : MonoBehaviour
             _verticalInput += Input.GetAxis("Vertical");
             _jump = Input.GetButtonDown("Jump");
             _strike = Input.GetButtonDown("Fire1");
+            _rangeStrike = Input.GetButtonDown("Fire2");
         }
     }
 }

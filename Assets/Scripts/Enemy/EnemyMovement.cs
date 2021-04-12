@@ -60,6 +60,7 @@ public class EnemyMovement : MonoBehaviour
                 _currentState = EnemyState.Idle;
                     break;
         }
+        _timeToNextAttack += Time.deltaTime;
     }
 
     private void Patrolling()
@@ -117,7 +118,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void ProcessAttack()
     {
-        _timeToNextAttack += Time.deltaTime;
+       
         if(_timeToNextAttack >= _attackRate)
         {
             Attack();

@@ -43,6 +43,9 @@ public class EnemyHealth : MonoBehaviour
     {
         IsDead = true;
         GetComponent<EnemyMovement>().enabled = false;
+        GetComponent<Rigidbody2D>().gravityScale = 0;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<CapsuleCollider2D>().enabled = false;
         OnDead.Invoke();
     }
 
