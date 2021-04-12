@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class PickUpAxe : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        StartCoroutine(UpDownAnimation());
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.TryGetComponent(out PlayerCombat player))
+        {
+            player.GetAxe();
+            //TODO particles
+            Destroy(this.gameObject);
+        }
+    }
+    private IEnumerator UpDownAnimation()
+    {
+        float number = 0;
+        while (number < 1)
+        {
+            transform.position += Vector3.up * .02f;
+            number += .1f;
+            yield return new WaitForSeconds(.08f);
+        }
+        number = 0;
+        while (number < 1)
+        {
+            transform.position += Vector3.down * .02f;
+            number += .1f;
+            yield return new WaitForSeconds(.08f);
+        }
+
+        StartCoroutine(UpDownAnimation());
+        yield return null;
+
     }
 }

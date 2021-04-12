@@ -34,9 +34,13 @@ public class PlayerCombat : MonoBehaviour
     public void GetSword()
     {
         if (!IsHasSword)
-        {
             IsHasSword = true;
-        }
+    }
+
+    public void GetAxe()
+    {
+        if (!IsHasAxe)
+            IsHasAxe = true;
     }
 
     private void Awake()
