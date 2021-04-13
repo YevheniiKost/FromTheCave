@@ -29,11 +29,17 @@ public class PlayerController : MonoBehaviour
     private float _originalScale;
     private float _originalGravityScale;
 
+    private int _currentScores;
+
     private Rigidbody2D rb;
     private CapsuleCollider2D _collider;
     private PlayerInput input;
     
-
+    public void GetScore()
+    {
+        _currentScores++;
+        EventAggregator.RaiseOnChangeScoreEvent(_currentScores);
+    }
 
     private void Awake()
     {
@@ -46,6 +52,8 @@ public class PlayerController : MonoBehaviour
     {
         _originalScale = transform.localScale.x;
         _originalGravityScale = rb.gravityScale;
+        _currentScores = 0;
+
     }
 
     void Update()

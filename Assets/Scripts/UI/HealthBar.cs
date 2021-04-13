@@ -11,7 +11,7 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
-        FindObjectOfType<PlayerHealth>().OnHealthChanged += ChangeHealth;
+        EventAggregator.OnChangeHealth += ChangeHealth;
 
         FillHeartsArray();
     }

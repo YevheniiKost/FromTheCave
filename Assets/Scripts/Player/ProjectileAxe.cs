@@ -43,7 +43,7 @@ public class ProjectileAxe : MonoBehaviour
         int number = 0;
         while(number < 360)
         {
-            transform.localRotation = Quaternion.Euler(0, 0, -number*10);
+            transform.localRotation = Quaternion.Euler(0, 0, -number*10 * _direction);
             yield return new WaitForSeconds(_rotationSpeed);
             number++;
         }
