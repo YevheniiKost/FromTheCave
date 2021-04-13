@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private AnimatorOverrideController _overrideController;
 
     private int _isWalkingParamID;
     private int _attackParamID;
@@ -27,6 +28,14 @@ public class EnemyAnimation : MonoBehaviour
         _attackParamID = Animator.StringToHash("Attack");
         _hitParamID = Animator.StringToHash("Hit");
         _isDeadParamID = Animator.StringToHash("IsDead");
+    }
+
+    private void Start()
+    {
+        if(_overrideController != null)
+        {
+            _animator.runtimeAnimatorController = _overrideController;
+        }
     }
 
     private void PlayAttackAnimation()
