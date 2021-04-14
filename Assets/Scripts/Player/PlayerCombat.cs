@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour, ISaveState
 {
     public delegate void Action();
 
@@ -30,6 +30,20 @@ public class PlayerCombat : MonoBehaviour
     private PlayerInput input;
     private float _nextSwordAttackTime = 0f;
     private float _nextRangeAttackTime = 0f;
+
+    public void Save()
+    {
+        var jsonHasSword = JsonUtility.ToJson(IsHasSword);
+        var jsonHasAxe = JsonUtility.ToJson(IsHasAxe);
+        PlayerPrefs.SetInt("Sword", IsHasSword ? 1 : 0);
+        PlayerPrefs.SetInt("Axe", IsHasAxe ? 1 : 0);
+    }
+
+    public void Load()
+    {
+        IsHasSword = PlayerPrefs.GetInt("Sword") == 1;
+        IsHasAxe = PlayerPrefs.GetInt("Axe") == 1;
+    }
 
     public void GetSword()
     {
@@ -114,4 +128,6 @@ public class PlayerCombat : MonoBehaviour
     {
         Gizmos.DrawWireSphere(_attackPoint.position, _swordAttackRange);
     }
+
+  
 }

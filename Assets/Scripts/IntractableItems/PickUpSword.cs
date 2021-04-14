@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpSword : MonoBehaviour
+public class PickUpSword : PickupableItem
 {
     private void Start()
     {
@@ -14,7 +14,8 @@ public class PickUpSword : MonoBehaviour
         {
             player.GetSword();
             //TODO particles
-            Destroy(this.gameObject);
+            DisableItem(false);
+            isActive = false;
         }
     }
      private IEnumerator UpDownAnimation()
@@ -38,4 +39,5 @@ public class PickUpSword : MonoBehaviour
         yield return null;
 
     }
+
 }

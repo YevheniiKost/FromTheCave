@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpHealth : MonoBehaviour
+public class PickUpHealth : PickupableItem
 {
 
     [SerializeField] private int _healthAmount = 1;
@@ -16,7 +16,8 @@ public class PickUpHealth : MonoBehaviour
         {
             player.ModifyHealth(_healthAmount);
             //TODO particles
-            Destroy(this.gameObject);
+            DisableItem(false);
+            isActive = false;
         }
     }
     private IEnumerator UpDownAnimation()

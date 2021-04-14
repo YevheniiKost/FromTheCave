@@ -19,7 +19,6 @@ public class EnemyAnimation : MonoBehaviour
     private void Awake()
     {
         GetComponent<EnemyHealth>().OnGetHit += PlayHitAnimation;
-        GetComponent<EnemyHealth>().OnDead += PlayDeathAnimation;
         GetComponent<EnemyMovement>().OnAttack += PlayAttackAnimation;
 
         _rb = GetComponent<Rigidbody2D>();
@@ -43,11 +42,6 @@ public class EnemyAnimation : MonoBehaviour
         _animator.SetTrigger(_attackParamID);
     }
 
-    private void PlayDeathAnimation()
-    {
-        _animator.SetBool(_isDeadParamID, true);
-    }
-
     private void PlayHitAnimation()
     {
         _animator.SetTrigger(_hitParamID);
@@ -56,6 +50,7 @@ public class EnemyAnimation : MonoBehaviour
     private void Update()
     {
         CatchTheVelocity();
+        _animator.SetBool(_isDeadParamID, GetComponent<EnemyHealth>().IsDead);
     }
 
     private void CatchTheVelocity()

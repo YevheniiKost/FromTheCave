@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, ISaveState
 {
     public delegate void Action();
 
@@ -12,9 +12,23 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int _startHealth;
     [SerializeField] private int _maxHealth;
 
-    public bool IsCharacterDead;
+    public bool IsCharacterDead = false;
 
     private int _currentPlayerHealth;
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("PlayerHealth", _currentPlayerHealth);
+        var jsonIsDead = JsonUtility.ToJson(IsCharacterDead);
+        PlayerPrefs.SetString("IsPlayerDead", jsonIsDead);
+    }
+
+    public void Load()
+    {
+        _currentPlayerHealth = PlayerPrefs.GetInt("PlayerHealth");
+        IsCharacterDead = JsonUtility.FromJson<bool>(PlayerPrefs.GetString("IsPlayerDead"));
+        EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+    }
 
     public void ModifyHealth(int amount)
     {
@@ -65,5 +79,8 @@ public class PlayerHealth : MonoBehaviour
     private void StartDeathSequence()
     {
         IsCharacterDead = true;
+        EventAggregator.RaiseOnPlayerDeathEvent();
     }
+
+  
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpAxe : MonoBehaviour
+public class PickUpAxe : PickupableItem
 {
     private void Start()
     {
@@ -14,7 +14,8 @@ public class PickUpAxe : MonoBehaviour
         {
             player.GetAxe();
             //TODO particles
-            Destroy(this.gameObject);
+            DisableItem(false);
+            isActive = false;
         }
     }
     private IEnumerator UpDownAnimation()

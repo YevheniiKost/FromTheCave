@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISaveState
 {
     [Header("Movemevt options")]
     [SerializeField] private float _horizontalSpeed = 10f;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private float _originalScale;
     private float _originalGravityScale;
 
-    private int _currentScores;
+    private int _currentScores = 0;
 
     private Rigidbody2D rb;
     private CapsuleCollider2D _collider;
@@ -41,6 +41,22 @@ public class PlayerController : MonoBehaviour
         EventAggregator.RaiseOnChangeScoreEvent(_currentScores);
     }
 
+    public void Save()
+    {
+        var jsonPosition = JsonUtility.ToJson(transform.position);
+        PlayerPrefs.SetString("PlayerPosition", jsonPosition);
+        PlayerPrefs.SetInt("PlayerScore", _currentScores);
+    }
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("PlayerPosition"))
+        {
+            transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
+            _currentScores = PlayerPrefs.GetInt("PlayerScore");
+            EventAggregator.RaiseOnChangeScoreEvent(_currentScores);
+        }
+    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,8 +68,6 @@ public class PlayerController : MonoBehaviour
     {
         _originalScale = transform.localScale.x;
         _originalGravityScale = rb.gravityScale;
-        _currentScores = 0;
-
     }
 
     void Update()
@@ -198,4 +212,5 @@ public class PlayerController : MonoBehaviour
         }
         return hit;
     }
+
 }

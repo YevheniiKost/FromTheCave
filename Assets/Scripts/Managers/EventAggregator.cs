@@ -9,6 +9,12 @@ public class EventAggregator
 
     public static event GameEventInt OnChangeScore;
     public static event GameEventInt OnChangeHealth;
+    public static event GameEvent OnPlayerDeath;
+
+    public static void RaiseOnPlayerDeathEvent()
+    {
+        OnPlayerDeath?.Invoke();
+    }
 
     public static void RaiseOnChangeScoreEvent(int score)
     {

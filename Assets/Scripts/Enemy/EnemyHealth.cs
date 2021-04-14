@@ -3,18 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, ISaveState
 {
     public delegate void Action();
 
     public event Action OnGetHit;
-    public event Action OnDead;
 
     [SerializeField] private float _startHealth;
 
     public bool IsDead;
 
     private float _currentHealth;
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat($"Health-{gameObject.name}", _currentHealth);
+        PlayerPrefs.SetInt($"IsDead-{gameObject.name}", IsDead ? 1 : 0);
+    }
+
+    public void Load()
+    {
+        _currentHealth = PlayerPrefs.GetFloat($"Health-{gameObject.name}");
+        IsDead = PlayerPrefs.GetInt($"IsDead-{gameObject.name}") == 1;
+    }
 
     public void GetHit(int amount)
     {
@@ -46,8 +57,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         GetComponent<CapsuleCollider2D>().enabled = false;
-        OnDead.Invoke();
     }
 
-    
+   
 }
