@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, ISaveState
 
     [HideInInspector]
     public bool IsOnGround;
-    [HideInInspector]
+    //[HideInInspector]
     public bool IsClimbing;
 
     private int _direction = 1;
