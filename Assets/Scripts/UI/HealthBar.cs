@@ -11,13 +11,18 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
-        EventAggregator.OnChangeHealth += ChangeHealth;
-
         FillHeartsArray();
+        EventAggregator.OnChangeHealth += ChangeHealth;
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.OnChangeHealth -= ChangeHealth;
     }
 
     private void FillHeartsArray()
     {
+        _heartsList.Clear();
         for (int i = 0; i < transform.childCount; i++)
         {
             _heartsList.Add(transform.GetChild(i));

@@ -20,15 +20,23 @@ public class GameManager : MonoBehaviour
     private void UnsubscribeToEvents()
     {
         EventAggregator.OnPlayerDeath -= ProcessPlayerDeath;
+        EventAggregator.OnRestartLevel -= RestartLevel;
     }
 
     private void SubscribeOnEvents()
     {
         EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
+        EventAggregator.OnRestartLevel += RestartLevel;
     }
 
+
+    private void RestartLevel()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene(0);
+    }
     private void ProcessPlayerDeath()
     {
-        SceneManager.LoadScene(0);
+       // SceneManager.LoadScene(0);
     }
 }

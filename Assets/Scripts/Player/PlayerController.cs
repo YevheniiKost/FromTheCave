@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour, ISaveState
     {
         ClimbingTheLadder(collision);
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         ChangePlatformProperties(collision);
     }
@@ -121,25 +122,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         }
     }
 
-    private void PhysicsCheck()
-    {
-        RaycastHit2D rightLegGroundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
-        RaycastHit2D leftLegGroundCheck = Raycast(new Vector2(-_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
-       
-
-        if (rightLegGroundCheck || leftLegGroundCheck )
-        {
-            IsOnGround = true;
-        }
-        else 
-        {
-            IsOnGround = false;
-        }
-
-        if(!IsClimbing)
-            rb.gravityScale = _originalGravityScale;
-
-    }
+  
     private void GroundMovement()
     {
         float xVelocity = _horizontalSpeed * input.HorizontalInput;
@@ -186,6 +169,25 @@ public class PlayerController : MonoBehaviour, ISaveState
                 IsClimbing = false;
             } 
         }
+    }
+    private void PhysicsCheck()
+    {
+        RaycastHit2D rightLegGroundCheck = Raycast(new Vector2(_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
+        RaycastHit2D leftLegGroundCheck = Raycast(new Vector2(-_footOffeset, .2f), Vector2.down, _groundDistance, _groundMask);
+
+
+        if (rightLegGroundCheck || leftLegGroundCheck)
+        {
+            IsOnGround = true;
+        }
+        else
+        {
+            IsOnGround = false;
+        }
+
+        if (!IsClimbing)
+            rb.gravityScale = _originalGravityScale;
+
     }
 
     private void FlipCharacterDirection()

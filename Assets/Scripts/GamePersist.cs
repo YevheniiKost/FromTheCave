@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class GamePersist : MonoBehaviour
 {
-    private void OnDisable() => Save();
+    //private void OnDisable() => Save();
 
-    private void Start() => Load();
+   // private void Start() => Load();
+
+    private void Awake()
+    {
+        EventAggregator.OnSaveGame += Save;
+        EventAggregator.OnLoadGame += Load;
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.OnSaveGame -= Save;
+        EventAggregator.OnLoadGame -= Load;
+    }
 
     [ContextMenu("Load")]
     private void Load()
