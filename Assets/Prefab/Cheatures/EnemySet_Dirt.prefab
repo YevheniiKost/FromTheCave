@@ -98,11 +98,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6435003925234303464, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: cbe540d7c640f4c4c9cfd4565c5b5805,
+        type: 2}
     - target: {fileID: 7027139686591795476, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 6e4460827a2fe4f43b83b4c9c55ec1dd,
         type: 3}
+    - target: {fileID: 8948003233961430818, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _startHealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195261345179298415, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.129
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195261345179298415, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.271
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9, type: 3}

@@ -94,7 +94,6 @@ MonoBehaviour:
   _ladderClimbingSpeed: 2
   _groundDistance: 0.4
   _footOffeset: 0.16
-  _ladderCheckOffcest: 0.5
   _groundMask:
     serializedVersion: 2
     m_Bits: 768
@@ -104,7 +103,6 @@ MonoBehaviour:
   _drawDebugRaycasts: 1
   IsOnGround: 0
   IsClimbing: 0
-  IsJumping: 0
 --- !u!114 &74663588211003549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,18 +157,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _noWeaponDamage: 10
   _swordDamage: 50
-  _bowDamage: 30
+  _rangeDamage: 30
   _kickAttackRange: 0.3
   _swordAttackRange: 0.8
   _meeleAttackRate: 0.2
+  _rangeAttaclRate: 1
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
   _attackPoint: {fileID: 6459458758883190601}
   _swordAnimController: {fileID: 22100000, guid: 9cd9d29379a1f1743a5b2e60c993328c,
     type: 2}
+  _projectilePrefab: {fileID: 0}
   IsHasSword: 0
-  IsHasBow: 0
+  IsHasAxe: 0
 --- !u!1 &4676689399561506664
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 1142692238335866698}
   - component: {fileID: 3579086197181138518}
   - component: {fileID: 5681546608494765121}
+  - component: {fileID: 8976133240054749483}
   m_Layer: 11
   m_Name: Avatar
   m_TagString: Untagged
@@ -302,3 +303,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8976133240054749483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640544343056157582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42829098e4100194489156d8375dc9c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

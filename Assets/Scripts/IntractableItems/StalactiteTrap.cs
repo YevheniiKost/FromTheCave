@@ -13,11 +13,14 @@ public class StalactiteTrap : MonoBehaviour
     [SerializeField] private float _shakeRandomness;
     [SerializeField] private float _fallingSpeed;
 
+    private bool _isTriggered = false;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerController>())
         {
+            if(!_isTriggered)
             StartCoroutine(StalactiteCoroutine());
 
             Destroy(this.gameObject, 5f);
@@ -26,6 +29,7 @@ public class StalactiteTrap : MonoBehaviour
 
     private IEnumerator StalactiteCoroutine()
     {
+        _isTriggered = true;
         if(_stalactite != null)
         _stalactite.DOShakePosition(_shakeDuration, _shakeStrenght, _shakeVibratio, _shakeRandomness);
 

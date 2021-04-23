@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerHealth : MonoBehaviour, ISaveState
 {
@@ -32,7 +33,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
 
     public void ModifyHealth(int amount)
     {
-        if (!IsCharacterDead)
+        if (!IsCharacterDead && !GetComponent<PlayerCombat>().IsBlockUp)
         {
             if (_currentPlayerHealth == _maxHealth && amount > 0)
                 return;
@@ -69,7 +70,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
 
     private void Update()
     {
-        if(_currentPlayerHealth <= 0)
+        if(_currentPlayerHealth <= 0 && !IsCharacterDead)
         {
             _currentPlayerHealth = 0;
             StartDeathSequence();
@@ -79,8 +80,12 @@ public class PlayerHealth : MonoBehaviour, ISaveState
     private void StartDeathSequence()
     {
         IsCharacterDead = true;
-        EventAggregator.RaiseOnPlayerDeathEvent();
+        StartCoroutine(ExecuteAfterDelay(1f));
     }
 
-  
+    private IEnumerator ExecuteAfterDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        EventAggregator.RaiseOnPlayerDeathEvent();
+    }
 }

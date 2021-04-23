@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, ISaveState
 
     [HideInInspector]
     public bool IsOnGround;
-    //[HideInInspector]
+    [HideInInspector]
     public bool IsClimbing;
 
     private int _direction = 1;
@@ -125,26 +125,33 @@ public class PlayerController : MonoBehaviour, ISaveState
   
     private void GroundMovement()
     {
-        float xVelocity = _horizontalSpeed * input.HorizontalInput;
-
-        if (xVelocity * _direction < 0f)
+        if (!GetComponent<PlayerCombat>().IsBlockUp)
         {
-            FlipCharacterDirection();
-        }
+            float xVelocity = _horizontalSpeed * input.HorizontalInput;
 
-        if (IsOnGround)
-        {
-            rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+            if (xVelocity * _direction < 0f)
+            {
+                FlipCharacterDirection();
+            }
+
+            if (IsOnGround)
+            {
+                rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(xVelocity * _flightSpeedReduser, rb.velocity.y);
+            }
         }
         else
         {
-            rb.velocity = new Vector2(xVelocity * _flightSpeedReduser, rb.velocity.y);
+            rb.velocity = Vector2.zero;
         }
     }
 
     private void Jumping()
     {
-        if (IsOnGround && input.JumpInput && !IsClimbing)
+        if (IsOnGround && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.05f)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
         }

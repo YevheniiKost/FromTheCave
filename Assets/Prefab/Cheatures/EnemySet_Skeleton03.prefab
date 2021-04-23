@@ -9,6 +9,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3288348686928650260, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
+      propertyPath: _attackRate
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288348686928650260, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _attackDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288348686928650260, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
       propertyPath: _meeleAttackDistance
       value: 1.5
       objectReference: {fileID: 0}
@@ -78,11 +88,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6435003925234303464, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: f6d90076edaa9b242b62b80f39ed4ae7,
+        type: 2}
     - target: {fileID: 7027139686591795476, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f28e5060b1c87274280e20a11304db5a,
         type: 3}
+    - target: {fileID: 8948003233961430818, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _startHealth
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9, type: 3}

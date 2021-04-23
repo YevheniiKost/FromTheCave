@@ -24,12 +24,16 @@ public class PlayerCombat : MonoBehaviour, ISaveState
 
     public bool IsHasSword;
     public bool IsHasAxe;
+    public bool IsBlockUp;
 
     private RuntimeAnimatorController _controllerBase;
     private Animator animator;
     private PlayerInput input;
     private float _nextSwordAttackTime = 0f;
     private float _nextRangeAttackTime = 0f;
+
+    private float _currentAttacRange;
+    private int _currentDamage;
 
     public void Save()
     {
@@ -57,6 +61,19 @@ public class PlayerCombat : MonoBehaviour, ISaveState
             IsHasAxe = true;
     }
 
+    public void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _currentAttacRange, _enemyLayer);
+
+        foreach (var enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent(out EnemyHealth enemyHit))
+            {
+                enemyHit.GetHit(_currentDamage);
+            }
+        }
+    }
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -70,10 +87,25 @@ public class PlayerCombat : MonoBehaviour, ISaveState
     private void Update()
     {
         UpdateAnimation();
-        ProcessStrikes();
-        ProcessRangeStrikes();
+        if (!GetComponent<PlayerHealth>().IsCharacterDead)
+        {
+            ProcessStrikes();
+            ProcessRangeStrikes();
+            ProcessBlock();
+        }
         _nextSwordAttackTime += Time.deltaTime;
         _nextRangeAttackTime += Time.deltaTime;
+    }
+
+    private void ProcessBlock()
+    {
+        if (input.Block && IsHasSword && GetComponent<PlayerController>().IsOnGround)
+        {
+            IsBlockUp = true;
+        } else
+        {
+            IsBlockUp = false;
+        }
     }
 
     private void ProcessRangeStrikes()
@@ -89,25 +121,18 @@ public class PlayerCombat : MonoBehaviour, ISaveState
         }
     }
 
+    
     private void ProcessStrikes()
     {
-        float currentAttacRange = IsHasSword ? _swordAttackRange : _kickAttackRange;
-        int currentDamage = IsHasSword ? _swordDamage : _noWeaponDamage;
+        _currentAttacRange = IsHasSword ? _swordAttackRange : _kickAttackRange;
+        _currentDamage = IsHasSword ? _swordDamage : _noWeaponDamage;
 
         if (input.Strike && _nextSwordAttackTime >= _meeleAttackRate)
         {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, currentAttacRange, _enemyLayer);
-
-            foreach (var enemy in hitEnemies)
-            {
-                if(enemy.TryGetComponent( out EnemyHealth enemyHit))
-                {
-                    enemyHit.GetHit(currentDamage);
-                }
-            }
+           // Attack();
 
             _nextSwordAttackTime = 0;
-           
+
             OnStrike?.Invoke();
         }
     }

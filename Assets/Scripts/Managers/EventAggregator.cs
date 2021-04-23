@@ -10,9 +10,21 @@ public class EventAggregator
     public static event GameEventInt OnChangeScore;
     public static event GameEventInt OnChangeHealth;
     public static event GameEvent OnPlayerDeath;
+    public static event GameEvent OnStartGame;
     public static event GameEvent OnSaveGame;
     public static event GameEvent OnLoadGame;
     public static event GameEvent OnRestartLevel;
+    public static event GameEvent OnFinishLevel;
+    
+    public static void RaiseOnGameStartEvent()
+    {
+        OnStartGame?.Invoke();
+    }
+
+    public static void RaiseOnFinishLevelEvent()
+    {
+        OnFinishLevel?.Invoke();
+    }
 
     public static void RaiseOnRestartLevelEvent()
     {

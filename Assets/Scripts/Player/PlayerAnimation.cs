@@ -17,6 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     private int _hitParamID;
     private int _strikeParamID;
     private int _rangeStrikeParamID;
+    private int _blockParamID;
 
     private bool _isRunning;
     private bool _isJumping;
@@ -49,6 +50,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(_runningParamID, _isRunning);
         animator.SetBool(_jumpingParamID, _isJumping);
         animator.SetBool(_deathParamID, GetComponent<PlayerHealth>().IsCharacterDead);
+        animator.SetBool(_blockParamID, GetComponent<PlayerCombat>().IsBlockUp);
     }
 
     private void SetParametersID()
@@ -60,6 +62,7 @@ public class PlayerAnimation : MonoBehaviour
         _hitParamID = Animator.StringToHash("IsHit");
         _strikeParamID = Animator.StringToHash("Attack");
         _rangeStrikeParamID = Animator.StringToHash("RangeAttack");
+        _blockParamID = Animator.StringToHash("IsBlocking");
     }
 
     private void CatchTheVelocity()

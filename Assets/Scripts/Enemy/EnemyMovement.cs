@@ -20,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform _patrollingPointA;
     [SerializeField] private Transform _patrollingPointB;
     [SerializeField] private float _waypointTolerance;
+    [SerializeField] private LayerMask _playerMask;
 
     private Transform _currentWaypoint;
     private EnemyState _currentState;
@@ -28,6 +29,20 @@ public class EnemyMovement : MonoBehaviour
     private int _direction = 1;
     private float _originalScale;
     private float _timeToNextAttack;
+
+    // Animation event
+    public void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _meeleAttackDistance);
+
+        foreach (var enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent(out PlayerHealth playerHit))
+            {
+                playerHit.ModifyHealth(-_attackDamage);
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -95,7 +110,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckDistanceToPlayer()
     {
-        if(Vector3.Distance(_player.transform.position, transform.position) < _chasingDistance)
+        if(Physics2D.Raycast(transform.position + Vector3.up, Vector2.left, _chasingDistance, _playerMask) || Physics2D.Raycast(transform.position, Vector2.right, _chasingDistance, _playerMask))
         {
             _currentState = EnemyState.ChasePlayer;
         } else
@@ -121,27 +136,14 @@ public class EnemyMovement : MonoBehaviour
        
         if(_timeToNextAttack >= _attackRate)
         {
-            Attack();
+            OnAttack?.Invoke();
+           // Attack();
             _timeToNextAttack = 0;
         }
 
     }
 
-    private void Attack()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _meeleAttackDistance);
-
-        foreach (var enemy in hitEnemies)
-        {
-            if (enemy.TryGetComponent(out PlayerHealth playerHit))
-            {
-                playerHit.ModifyHealth(-_attackDamage);
-            }
-        }
-
-
-        OnAttack?.Invoke();
-    }
+  
 
     private void MoveToTarget(Vector2 target)
     {

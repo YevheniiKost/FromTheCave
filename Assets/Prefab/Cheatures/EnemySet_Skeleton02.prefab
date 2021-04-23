@@ -7,6 +7,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3288348686928650260, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _attackRate
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548195084964629715, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _overrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: d8d1d9f5c32ed074198cabf280040af0,
+        type: 2}
+    - target: {fileID: 5735572267257187762, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.18
+      objectReference: {fileID: 0}
     - target: {fileID: 5735572267716518294, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_Name
@@ -20,12 +36,12 @@ PrefabInstance:
     - target: {fileID: 5735572267716518295, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.7173057
       objectReference: {fileID: 0}
     - target: {fileID: 5735572267716518295, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 5735572267716518295, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
@@ -67,11 +83,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5735572267785260110, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735572267785260110, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435003925234303464, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: d8d1d9f5c32ed074198cabf280040af0,
+        type: 2}
     - target: {fileID: 7027139686591795476, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: af16cb225967af543b9c764da4690c2e,
         type: 3}
+    - target: {fileID: 8948003233961430818, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9,
+        type: 3}
+      propertyPath: _startHealth
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5833b551f6ee5aa4f876fa5eae4ed7c9, type: 3}

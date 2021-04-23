@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour, ISaveState
     public delegate void Action();
 
     public event Action OnGetHit;
+    public event Action<float> OnHealthPctChanged;
 
     [SerializeField] private float _startHealth;
 
@@ -32,6 +33,9 @@ public class EnemyHealth : MonoBehaviour, ISaveState
         if (!IsDead)
         {
             _currentHealth -= amount;
+
+            float currentHealthPct = (float)_currentHealth / (float)_startHealth;
+            OnHealthPctChanged?.Invoke(currentHealthPct);
             OnGetHit?.Invoke();
         }
     }
