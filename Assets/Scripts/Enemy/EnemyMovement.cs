@@ -22,6 +22,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _waypointTolerance;
     [SerializeField] private LayerMask _playerMask;
 
+    [SerializeField] private float _playerDetectionOffset = 1f;
+    [SerializeField] private bool _drawDebugRaycasts = true;
+
     private Transform _currentWaypoint;
     private EnemyState _currentState;
     private Rigidbody2D _rb;
@@ -110,7 +113,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckDistanceToPlayer()
     {
-        if(Physics2D.Raycast(transform.position + Vector3.up, Vector2.left, _chasingDistance, _playerMask) || Physics2D.Raycast(transform.position, Vector2.right, _chasingDistance, _playerMask))
+        RaycastHit2D leftHit = Raycast(new Vector2(0f, _playerDetectionOffset), Vector2.left, _chasingDistance, _playerMask);
+        RaycastHit2D rightHit = Raycast(new Vector2(0f, _playerDetectionOffset), Vector2.right, _chasingDistance, _playerMask);
+
+        if (leftHit || rightHit)
         {
             _currentState = EnemyState.ChasePlayer;
         } else
@@ -165,6 +171,20 @@ public class EnemyMovement : MonoBehaviour
         scale.x = _originalScale * _direction;
 
         transform.localScale = scale;
+    }
+
+    private RaycastHit2D Raycast(Vector2 offset, Vector2 rayDirection, float length, LayerMask mask)
+    {
+        Vector2 pos = transform.position;
+
+        RaycastHit2D hit = Physics2D.Raycast(pos + offset, rayDirection, length, mask);
+
+        if (_drawDebugRaycasts)
+        {
+            Color color = hit ? Color.red : Color.green;
+            Debug.DrawRay(pos + offset, rayDirection * length, color);
+        }
+        return hit;
     }
 }
 

@@ -70,6 +70,7 @@ public class PlayerCombat : MonoBehaviour, ISaveState
             if (enemy.TryGetComponent(out EnemyHealth enemyHit))
             {
                 enemyHit.GetHit(_currentDamage);
+                return;
             }
         }
     }

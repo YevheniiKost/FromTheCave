@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadingScreen : MonoBehaviour
 {
@@ -10,6 +11,18 @@ public class LoadingScreen : MonoBehaviour
     private void Start()
     {
         StartCoroutine(LoadingDotsCycle());
+        StartCoroutine(LoadAsyncOperation());
+    }
+
+   
+    private IEnumerator LoadAsyncOperation()
+    {
+        AsyncOperation gameLevel = SceneManager.LoadSceneAsync(1);
+
+        while(gameLevel.progress < 1)
+        {
+            yield return null;
+        }
     }
 
     private IEnumerator LoadingDotsCycle()
@@ -24,6 +37,7 @@ public class LoadingScreen : MonoBehaviour
             _loadingText.text = $"{loading}...";
             yield return new WaitForSeconds(.5f);
 
+            yield return new WaitForEndOfFrame();
         }
     }
 }

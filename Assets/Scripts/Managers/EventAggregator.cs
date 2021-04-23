@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventAggregator 
+public class EventAggregator
 {
     public delegate void GameEvent();
     public delegate void GameEventInt(int someInt);
@@ -13,9 +13,15 @@ public class EventAggregator
     public static event GameEvent OnStartGame;
     public static event GameEvent OnSaveGame;
     public static event GameEvent OnLoadGame;
+    public static event GameEvent OnGamePause;
     public static event GameEvent OnRestartLevel;
     public static event GameEvent OnFinishLevel;
-    
+
+    public static void RaiseOnPauseGameEvent()
+    {
+        OnGamePause?.Invoke();
+    }
+
     public static void RaiseOnGameStartEvent()
     {
         OnStartGame?.Invoke();

@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class GamePersist : MonoBehaviour
 {
-    //private void OnDisable() => Save();
-
-   // private void Start() => Load();
-
     private void Awake()
     {
         EventAggregator.OnSaveGame += Save;

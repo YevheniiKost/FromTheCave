@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour, ISaveState
 
     private void Jumping()
     {
-        if (IsOnGround && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.05f)
+        if (IsOnGround && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.1f)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
         }

@@ -10,7 +10,8 @@ public class UIManager : MonoBehaviour
     public OptionsWindowUI OptionsWindow;
     public YouFailderWindowUI YouFailedWindow;
     public MessageWindowUI MessageWindow;
-    public GameObject YouWinWindow;
+    public YouWinWindowUI YouWinWindow;
+    public PauseWindowUI PauseWindow;
 
     public static UIManager Instance;
 
@@ -28,9 +29,6 @@ public class UIManager : MonoBehaviour
     {
         if(YouFailedWindow != null)
         YouFailedWindow.gameObject.SetActive(false);
-
-        if(YouWinWindow != null)
-        YouWinWindow.SetActive(false);
     }
 
     private void SubscribeToEvents()
@@ -38,10 +36,14 @@ public class UIManager : MonoBehaviour
         EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
         EventAggregator.OnLoadGame += LoadGame;
         EventAggregator.OnFinishLevel += FinishLevel;
+        EventAggregator.OnGamePause += PauseGame;
 
         MainWindowUI.OnMainWindowActive += GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive += GetOptionsWindow;
         MessageWindowUI.OnMessageWindowActive += GetMessageWindow;
+        PauseWindowUI.OnPauseWindowActive += GetPauseWindow;
+        YouWinWindowUI.OnYouWinWindowActive += GetWinWindow;
+        YouFailderWindowUI.OnYouFailedWindowActive += GetYouFailedWindow;
     }
 
     private void UnSubscribeToEvents()
@@ -49,20 +51,29 @@ public class UIManager : MonoBehaviour
         EventAggregator.OnPlayerDeath -= ProcessPlayerDeath;
         EventAggregator.OnLoadGame -= LoadGame;
         EventAggregator.OnFinishLevel -= FinishLevel;
+        EventAggregator.OnGamePause -= PauseGame;
 
         MainWindowUI.OnMainWindowActive -= GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive -= GetOptionsWindow;
         MessageWindowUI.OnMessageWindowActive -= GetMessageWindow;
+        PauseWindowUI.OnPauseWindowActive -= GetPauseWindow;
+        YouWinWindowUI.OnYouWinWindowActive -= GetWinWindow;
+        YouFailderWindowUI.OnYouFailedWindowActive -= GetYouFailedWindow;
     }
 
     private void FinishLevel()
     {
-        YouWinWindow.SetActive(true);
+        YouWinWindow.gameObject.SetActive(true);
     }
 
     private void LoadGame()
     {
         YouFailedWindow.gameObject.SetActive(false);
+    }
+
+    private void PauseGame()
+    {
+        PauseWindow.gameObject.SetActive(true);
     }
 
     private void ProcessPlayerDeath()
@@ -94,6 +105,33 @@ public class UIManager : MonoBehaviour
         {
             MessageWindow = window.GetComponent<MessageWindowUI>();
             MessageWindow.gameObject.SetActive(false);
+        }
+    }
+
+    private void GetPauseWindow(GameObject window)
+    {
+        if (PauseWindow == null)
+        {
+            PauseWindow = window.GetComponent<PauseWindowUI>();
+            PauseWindow.gameObject.SetActive(false);
+        }
+    }
+
+    private void GetWinWindow(GameObject window)
+    {
+        if (YouWinWindow == null)
+        {
+            YouWinWindow = window.GetComponent<YouWinWindowUI>();
+            YouWinWindow.gameObject.SetActive(false);
+        }
+    }
+
+    private void GetYouFailedWindow(GameObject window)
+    {
+        if (YouFailedWindow == null)
+        {
+            YouFailedWindow = window.GetComponent<YouFailderWindowUI>();
+            YouFailedWindow.gameObject.SetActive(false);
         }
     }
 

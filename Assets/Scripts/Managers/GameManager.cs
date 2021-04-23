@@ -7,10 +7,25 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+    public bool IsGamePaused = false;
+
     private void Awake()
     {
         SubscribeOnEvents();
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if(!IsGamePaused)
+            EventAggregator.RaiseOnPauseGameEvent();
+            else
+            {
+                UnPauseGame();
+            }
+        }
     }
 
     private void OnDestroy()
@@ -23,6 +38,7 @@ public class GameManager : MonoBehaviour
         EventAggregator.OnRestartLevel += RestartLevel;
         EventAggregator.OnFinishLevel += FinishLevel;
         EventAggregator.OnStartGame += StartGame;
+        EventAggregator.OnGamePause += PauseGame;
     }
 
     private void UnsubscribeToEvents()
@@ -31,11 +47,25 @@ public class GameManager : MonoBehaviour
         EventAggregator.OnRestartLevel -= RestartLevel;
         EventAggregator.OnFinishLevel -= FinishLevel;
         EventAggregator.OnStartGame -= StartGame;
+        EventAggregator.OnGamePause -= PauseGame;
+    }
+
+    private void PauseGame()
+    {
+        IsGamePaused = true;
+        Time.timeScale = 0;
+    }
+
+    private void UnPauseGame()
+    {
+        IsGamePaused = false;
+        Time.timeScale = 1;
+        UIManager.Instance.PauseWindow.gameObject.SetActive(false);
     }
 
     private void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private void FinishLevel()
