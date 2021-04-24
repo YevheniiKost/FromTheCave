@@ -35,8 +35,11 @@ public class ProjectileAxe : MonoBehaviour
         {
             enemy.GetHit(_currentDamage);
         }
-        AudioManager.Instance.PlaySFX(SoundsFx.AxeImpact);
-        Destroy(this.gameObject);
+        if (!collision.GetComponent<PlayerController>())
+        {
+            AudioManager.Instance.PlaySFX(SoundsFx.AxeImpact);
+            Destroy(this.gameObject);
+        }
     }
 
     private IEnumerator StartRotation()

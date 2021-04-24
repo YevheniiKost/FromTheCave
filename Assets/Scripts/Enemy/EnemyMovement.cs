@@ -43,6 +43,7 @@ public class EnemyMovement : MonoBehaviour
             if (enemy.TryGetComponent(out PlayerHealth playerHit))
             {
                 playerHit.ModifyHealth(-_attackDamage);
+                AudioManager.Instance.PlaySFX(SoundsFx.EnemyStrike);
             }
         }
     }
@@ -143,7 +144,7 @@ public class EnemyMovement : MonoBehaviour
         if(_timeToNextAttack >= _attackRate)
         {
             OnAttack?.Invoke();
-            AudioManager.Instance.PlaySFX(SoundsFx.EnemyStrike);
+            
             _timeToNextAttack = 0;
         }
 
