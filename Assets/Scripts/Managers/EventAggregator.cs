@@ -14,8 +14,20 @@ public class EventAggregator
     public static event GameEvent OnSaveGame;
     public static event GameEvent OnLoadGame;
     public static event GameEvent OnGamePause;
+    public static event GameEvent OnGameUnpause;
     public static event GameEvent OnRestartLevel;
     public static event GameEvent OnFinishLevel;
+    public static event GameEvent OnReturnToMainMenu;
+
+    public static void RaiseOnReturnToMainMenu()
+    {
+        OnReturnToMainMenu?.Invoke();
+    }
+
+    public static void RaiseOnUnpaseGameEvent()
+    {
+        OnGameUnpause?.Invoke();
+    }
 
     public static void RaiseOnPauseGameEvent()
     {

@@ -15,17 +15,20 @@ public class EnemyHealth : MonoBehaviour, ISaveState
     public bool IsDead;
 
     private float _currentHealth;
+    private string _enemyName;
 
     public void Save()
     {
-        PlayerPrefs.SetFloat($"Health-{gameObject.name}", _currentHealth);
-        PlayerPrefs.SetInt($"IsDead-{gameObject.name}", IsDead ? 1 : 0);
+        PlayerPrefs.SetFloat($"Health-{_enemyName}", _currentHealth);
+        PlayerPrefs.SetInt($"IsDead-{_enemyName}", IsDead ? 1 : 0);
     }
 
     public void Load()
     {
-        _currentHealth = PlayerPrefs.GetFloat($"Health-{gameObject.name}");
-        IsDead = PlayerPrefs.GetInt($"IsDead-{gameObject.name}") == 1;
+        _currentHealth = PlayerPrefs.GetFloat($"Health-{_enemyName}");
+        IsDead = PlayerPrefs.GetInt($"IsDead-{_enemyName}") == 1;
+        if(!IsDead)
+        CallHealthChange();
     }
 
     public void GetHit(int amount)
@@ -33,11 +36,20 @@ public class EnemyHealth : MonoBehaviour, ISaveState
         if (!IsDead)
         {
             _currentHealth -= amount;
-
-            float currentHealthPct = (float)_currentHealth / (float)_startHealth;
-            OnHealthPctChanged?.Invoke(currentHealthPct);
+            CallHealthChange();
             OnGetHit?.Invoke();
         }
+    }
+
+    private void CallHealthChange()
+    {
+        float currentHealthPct = (float)_currentHealth / (float)_startHealth;
+        OnHealthPctChanged?.Invoke(currentHealthPct);
+    }
+
+    private void Awake()
+    {
+        _enemyName = transform.parent.name;    
     }
 
     void Start()

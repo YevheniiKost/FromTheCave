@@ -57,8 +57,8 @@ public class PlayerInput : MonoBehaviour
             _verticalInput += Input.GetAxis("Vertical");
             _jump = Input.GetButtonDown("Jump");
             _strike = Input.GetButtonDown("Fire1");
-            _rangeStrike = Input.GetButtonDown("Fire2");
-            _block = Input.GetKey(KeyCode.S);
+            _rangeStrike = Input.GetKeyDown(KeyCode.E);
+            _block = Input.GetButton("Fire2");
         }
     }
 }

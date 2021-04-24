@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class YouFailderWindowUI : MonoBehaviour
@@ -7,11 +8,13 @@ public class YouFailderWindowUI : MonoBehaviour
 
     [SerializeField] private Button _tryAgainFromCheckpointButton;
     [SerializeField] private Button _restartLevelButton;
+    [SerializeField] private Button _returnToMainMenuButton;
 
     private void Awake()
     {
         _tryAgainFromCheckpointButton.onClick.AddListener(OnTryAgainButtonClickHandler);
         _restartLevelButton.onClick.AddListener(OnRestartLevelButtonClickHandler);
+        _returnToMainMenuButton.onClick.AddListener(OnReturnToMainMenuButtonClickHandler);
     }
 
     private void Start()
@@ -19,13 +22,28 @@ public class YouFailderWindowUI : MonoBehaviour
         OnYouFailedWindowActive?.Invoke(gameObject);
     }
 
+    private void OnReturnToMainMenuButtonClickHandler()
+    {
+        UIManager.Instance.MessageWindow.CreateMessageWindow(" ", ReturnToMainMenu);
+    }
+
     private void OnRestartLevelButtonClickHandler()
     {
-        EventAggregator.RaiseOnRestartLevelEvent();
+        UIManager.Instance.MessageWindow.CreateMessageWindow("Restart level?", RestartLevel);
     }
 
     private void OnTryAgainButtonClickHandler()
     {
         EventAggregator.RaiseOnLoadGameEvent();
+    }
+
+    private void RestartLevel()
+    {
+        EventAggregator.RaiseOnRestartLevelEvent();
+    }
+
+    private void ReturnToMainMenu()
+    {
+        EventAggregator.RaiseOnReturnToMainMenu();
     }
 }

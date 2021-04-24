@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public bool IsGamePaused = false;
+
+    private float _levelCompleteTime;
+    private PlayerController _player;
 
     private void Awake()
     {
@@ -17,14 +19,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        ProcessEscButton();
+    }
+
+    private void ProcessEscButton()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex == 1)
         {
-            if(!IsGamePaused)
-            EventAggregator.RaiseOnPauseGameEvent();
+            if (!IsGamePaused)
+                EventAggregator.RaiseOnPauseGameEvent();
             else
-            {
-                UnPauseGame();
-            }
+                EventAggregator.RaiseOnUnpaseGameEvent();
         }
     }
 
@@ -32,6 +37,8 @@ public class GameManager : MonoBehaviour
     {
         UnsubscribeToEvents();
     }
+
+    #region HandleEvents
     private void SubscribeOnEvents()
     {
         EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
@@ -39,6 +46,8 @@ public class GameManager : MonoBehaviour
         EventAggregator.OnFinishLevel += FinishLevel;
         EventAggregator.OnStartGame += StartGame;
         EventAggregator.OnGamePause += PauseGame;
+        EventAggregator.OnGameUnpause += UnpauseGame;
+        EventAggregator.OnReturnToMainMenu += ReturnToMainMenu;
     }
 
     private void UnsubscribeToEvents()
@@ -48,7 +57,11 @@ public class GameManager : MonoBehaviour
         EventAggregator.OnFinishLevel -= FinishLevel;
         EventAggregator.OnStartGame -= StartGame;
         EventAggregator.OnGamePause -= PauseGame;
+        EventAggregator.OnGameUnpause -= UnpauseGame;
+        EventAggregator.OnReturnToMainMenu -= ReturnToMainMenu;
     }
+
+    #endregion
 
     private void PauseGame()
     {
@@ -56,11 +69,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private void UnPauseGame()
+    private void UnpauseGame()
     {
         IsGamePaused = false;
         Time.timeScale = 1;
-        UIManager.Instance.PauseWindow.gameObject.SetActive(false);
     }
 
     private void StartGame()
@@ -71,13 +83,22 @@ public class GameManager : MonoBehaviour
     private void FinishLevel()
     {
         DisablePlayerControls();
+        _player = FindObjectOfType<PlayerController>();
+        UIManager.Instance.YouWinWindow.SetWinWindow(_player.CurrentScores, Time.timeSinceLevelLoad);
     }
 
     private void RestartLevel()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
+
+    private void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+    }
+
     private void ProcessPlayerDeath()
     {
        // SceneManager.LoadScene(0);
@@ -85,8 +106,8 @@ public class GameManager : MonoBehaviour
 
     private void DisablePlayerControls()
     {
-        var player = FindObjectOfType<PlayerController>();
-        player.enabled = false;
-        player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        _player = FindObjectOfType<PlayerController>();
+        _player.enabled = false;
+        _player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
     }
 }

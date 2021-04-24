@@ -24,12 +24,12 @@ public class PlayerController : MonoBehaviour, ISaveState
     public bool IsOnGround;
     [HideInInspector]
     public bool IsClimbing;
+    [HideInInspector]
+    public int CurrentScores = 0;
 
     private int _direction = 1;
     private float _originalScale;
     private float _originalGravityScale;
-
-    private int _currentScores = 0;
 
     private Rigidbody2D rb;
     private CapsuleCollider2D _collider;
@@ -37,15 +37,15 @@ public class PlayerController : MonoBehaviour, ISaveState
     
     public void GetScore()
     {
-        _currentScores++;
-        EventAggregator.RaiseOnChangeScoreEvent(_currentScores);
+        CurrentScores++;
+        EventAggregator.RaiseOnChangeScoreEvent(CurrentScores);
     }
 
     public void Save()
     {
         var jsonPosition = JsonUtility.ToJson(transform.position);
         PlayerPrefs.SetString("PlayerPosition", jsonPosition);
-        PlayerPrefs.SetInt("PlayerScore", _currentScores);
+        PlayerPrefs.SetInt("PlayerScore", CurrentScores);
     }
 
     public void Load()
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour, ISaveState
         if (PlayerPrefs.HasKey("PlayerPosition"))
         {
             transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-            _currentScores = PlayerPrefs.GetInt("PlayerScore");
-            EventAggregator.RaiseOnChangeScoreEvent(_currentScores);
+            CurrentScores = PlayerPrefs.GetInt("PlayerScore");
+            EventAggregator.RaiseOnChangeScoreEvent(CurrentScores);
         }
     }
     private void Awake()

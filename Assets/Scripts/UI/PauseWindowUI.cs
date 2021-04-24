@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +19,7 @@ public class PauseWindowUI : MonoBehaviour
 
     private void OnContinueButtonClickHandler()
     {
-        Time.timeScale = 1;
-        gameObject.SetActive(false);
+        EventAggregator.RaiseOnUnpaseGameEvent();
     }
 
     private void OnSettingsButtonClickHandler()
@@ -32,7 +29,12 @@ public class PauseWindowUI : MonoBehaviour
 
     private void OnReturnButtonClickHandler()
     {
-        throw new NotImplementedException();
+        UIManager.Instance.MessageWindow.CreateMessageWindow(" ", ReturnToMainMenu);
+    }
+
+    private void ReturnToMainMenu()
+    {
+        EventAggregator.RaiseOnReturnToMainMenu();
     }
 
     private void Start()

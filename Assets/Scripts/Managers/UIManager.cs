@@ -31,12 +31,14 @@ public class UIManager : MonoBehaviour
         YouFailedWindow.gameObject.SetActive(false);
     }
 
+    #region HandleEvents
     private void SubscribeToEvents()
     {
         EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
         EventAggregator.OnLoadGame += LoadGame;
         EventAggregator.OnFinishLevel += FinishLevel;
         EventAggregator.OnGamePause += PauseGame;
+        EventAggregator.OnGameUnpause += UnpauseGame;
 
         MainWindowUI.OnMainWindowActive += GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive += GetOptionsWindow;
@@ -52,6 +54,7 @@ public class UIManager : MonoBehaviour
         EventAggregator.OnLoadGame -= LoadGame;
         EventAggregator.OnFinishLevel -= FinishLevel;
         EventAggregator.OnGamePause -= PauseGame;
+        EventAggregator.OnGameUnpause -= UnpauseGame;
 
         MainWindowUI.OnMainWindowActive -= GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive -= GetOptionsWindow;
@@ -60,6 +63,8 @@ public class UIManager : MonoBehaviour
         YouWinWindowUI.OnYouWinWindowActive -= GetWinWindow;
         YouFailderWindowUI.OnYouFailedWindowActive -= GetYouFailedWindow;
     }
+
+    #endregion
 
     private void FinishLevel()
     {
@@ -74,6 +79,11 @@ public class UIManager : MonoBehaviour
     private void PauseGame()
     {
         PauseWindow.gameObject.SetActive(true);
+    }
+
+    private void UnpauseGame()
+    {
+        PauseWindow.gameObject.SetActive(false);
     }
 
     private void ProcessPlayerDeath()

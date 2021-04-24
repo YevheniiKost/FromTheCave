@@ -61,6 +61,7 @@ public class PlayerCombat : MonoBehaviour, ISaveState
             IsHasAxe = true;
     }
 
+    //animation event
     public void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _currentAttacRange, _enemyLayer);
@@ -130,8 +131,6 @@ public class PlayerCombat : MonoBehaviour, ISaveState
 
         if (input.Strike && _nextSwordAttackTime >= _meeleAttackRate)
         {
-           // Attack();
-
             _nextSwordAttackTime = 0;
 
             OnStrike?.Invoke();
