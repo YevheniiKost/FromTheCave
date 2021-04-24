@@ -154,6 +154,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         if (IsOnGround && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.1f)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
+            AudioManager.Instance.PlaySFX(SoundsFx.Jump);
         }
     }
 

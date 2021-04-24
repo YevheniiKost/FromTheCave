@@ -11,17 +11,25 @@ public class OptionsWindowUI : MonoBehaviour
     [SerializeField] private Button _closeButton;
     [SerializeField] private Toggle _soundsOuToggle;
     [SerializeField] private Toggle _musicOnToggle;
+    [SerializeField] private Slider _soundsVolumeSlider;
+    [SerializeField] private Slider _musicVolumeSlider;
 
     private void Awake()
     {
         _closeButton.onClick.AddListener(OnCloseButtonClickHandler);
         _soundsOuToggle.onValueChanged.AddListener(OnSounsToggleValueChangeHandler);
-        _musicOnToggle.onValueChanged.AddListener(OnMusicToggleValueChangetHandler);
+        _musicOnToggle.onValueChanged.AddListener(OnMusicToggleValueChangeHandler);
+        _soundsVolumeSlider.onValueChanged.AddListener(OnSounsVolumeSliderValueChangeHandler);
+        _musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeSliderValueChangeHandler);
     }
 
     private void Start()
     {
         SetOptionsWindow();
+        _soundsVolumeSlider.value = AudioManager.Instance.SoundsFXVolume;
+        _musicVolumeSlider.value = AudioManager.Instance.MusicVolume;
+        _soundsOuToggle.isOn = !AudioManager.Instance.IsSoundsOff;
+        _musicOnToggle.isOn = !AudioManager.Instance.IsMusicOff;
     }
 
     private void OnCloseButtonClickHandler()
@@ -29,14 +37,23 @@ public class OptionsWindowUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnMusicToggleValueChangetHandler(bool arg0)
+    private void OnMusicToggleValueChangeHandler(bool isOn)
     {
-        throw new NotImplementedException();
+        AudioManager.Instance.SetMusic(!isOn);
     }
 
-    private void OnSounsToggleValueChangeHandler(bool arg0)
+    private void OnSounsToggleValueChangeHandler(bool isOn)
     {
-        throw new NotImplementedException();
+        AudioManager.Instance.SetSoundFX(!isOn);
+    }
+    private void OnMusicVolumeSliderValueChangeHandler(float value)
+    {
+        AudioManager.Instance.SetMusicVolume(value);
+    }
+
+    private void OnSounsVolumeSliderValueChangeHandler(float value)
+    {
+        AudioManager.Instance.SetFXVolume(value);
     }
 
     private void SetOptionsWindow()

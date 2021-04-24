@@ -15,4 +15,9 @@ public class PlayerAnimationEventsHandler : MonoBehaviour
     {
         _player.Attack();
     }
+
+    public void PlayFootstepSound()
+    {
+        AudioManager.Instance.PlaySFX(SoundsFx.Footstep);
+    }
 }

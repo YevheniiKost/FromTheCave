@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4015119936503940464}
   - component: {fileID: 4015119936503940465}
   - component: {fileID: 4015119936503940470}
+  - component: {fileID: 4905886062052749279}
   m_Layer: 5
   m_Name: TryFromCheckpointButton
   m_TagString: Untagged
@@ -120,6 +121,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4905886062052749279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015119936503940468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d516e2004969b4f8ac0de3cad943e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4015119936750886324
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +279,7 @@ GameObject:
   - component: {fileID: 4015119937283591790}
   - component: {fileID: 4015119937283591791}
   - component: {fileID: 4015119937283591788}
+  - component: {fileID: 2548422993234610266}
   m_Layer: 5
   m_Name: RestartLevelButton
   m_TagString: Untagged
@@ -374,6 +388,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2548422993234610266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015119937283591778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d516e2004969b4f8ac0de3cad943e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4015119937288692628
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,6 +849,7 @@ GameObject:
   - component: {fileID: 979941496905233643}
   - component: {fileID: 2841913837346757664}
   - component: {fileID: 3715958601046131229}
+  - component: {fileID: 4394476550204644916}
   m_Layer: 5
   m_Name: ReturnToMainMenuButton
   m_TagString: Untagged
@@ -931,6 +958,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4394476550204644916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058086871797132951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d516e2004969b4f8ac0de3cad943e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8950618912943262912
 GameObject:
   m_ObjectHideFlags: 0

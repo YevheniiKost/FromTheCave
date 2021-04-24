@@ -103,6 +103,7 @@ MonoBehaviour:
   _drawDebugRaycasts: 1
   IsOnGround: 0
   IsClimbing: 0
+  CurrentScores: 0
 --- !u!114 &74663588211003549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +172,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 0}
   IsHasSword: 0
   IsHasAxe: 0
+  IsBlockUp: 0
 --- !u!1 &4676689399561506664
 GameObject:
   m_ObjectHideFlags: 0

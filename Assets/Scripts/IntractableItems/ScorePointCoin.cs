@@ -9,6 +9,7 @@ public class ScorePointCoin : PickupableItem
         if(collision.TryGetComponent(out PlayerController player))
         {
             player.GetScore();
+            AudioManager.Instance.PlaySFX(SoundsFx.CollectCoin);
             DisableItem(false);
             isActive = false;
         }

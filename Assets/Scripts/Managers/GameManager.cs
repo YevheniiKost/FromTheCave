@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool IsGamePaused = false;
+    public static GameManager Instance;
 
     private float _levelCompleteTime;
     private PlayerController _player;
@@ -15,6 +16,16 @@ public class GameManager : MonoBehaviour
     {
         SubscribeOnEvents();
         DontDestroyOnLoad(this.gameObject);
+
+        if (Instance != null)
+            Destroy(this.gameObject);
+        else
+            Instance = this;
+    }
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayMusic(MusicType.MainMenu);
     }
 
     private void Update()
@@ -78,6 +89,7 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         SceneManager.LoadScene(2);
+        AudioManager.Instance.PlayMusic(MusicType.Game);
     }
 
     private void FinishLevel()
@@ -97,6 +109,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
+        AudioManager.Instance.PlayMusic(MusicType.MainMenu);
     }
 
     private void ProcessPlayerDeath()

@@ -120,6 +120,8 @@ public class PlayerCombat : MonoBehaviour, ISaveState
             _nextRangeAttackTime = 0;
 
             OnRangeStrike?.Invoke();
+
+            AudioManager.Instance.PlaySFX(SoundsFx.Throw);
         }
     }
 
@@ -132,6 +134,11 @@ public class PlayerCombat : MonoBehaviour, ISaveState
         if (input.Strike && _nextSwordAttackTime >= _meeleAttackRate)
         {
             _nextSwordAttackTime = 0;
+
+            if (IsHasSword)
+                AudioManager.Instance.PlaySFX(SoundsFx.SwordStrike);
+            else
+                AudioManager.Instance.PlaySFX(SoundsFx.Kick);
 
             OnStrike?.Invoke();
         }

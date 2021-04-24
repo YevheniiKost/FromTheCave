@@ -72,7 +72,7 @@ public class PlayerAnimation : MonoBehaviour
             _isRunning = true;
         } else { _isRunning = false; }
 
-        if((Mathf.Abs(rb.velocity.y) > 1) || !controller.IsOnGround && !controller.IsClimbing)
+        if((Mathf.Abs(rb.velocity.y) > 10) || !controller.IsOnGround && !controller.IsClimbing)
         {
             _isJumping = true;
             _isRunning = false;

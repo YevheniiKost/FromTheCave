@@ -301,6 +301,8 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 2048
+  _playerDetectionOffset: 1
+  _drawDebugRaycasts: 1
 --- !u!114 &4548195084964629715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +474,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e26625ab4146e7a458b77dc7d4fcffd7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4ae1bf2627cc934595c7c1a58cb6c08, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

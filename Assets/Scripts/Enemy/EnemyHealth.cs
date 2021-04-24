@@ -27,6 +27,7 @@ public class EnemyHealth : MonoBehaviour, ISaveState
     {
         _currentHealth = PlayerPrefs.GetFloat($"Health-{_enemyName}");
         IsDead = PlayerPrefs.GetInt($"IsDead-{_enemyName}") == 1;
+
         if(!IsDead)
         CallHealthChange();
     }

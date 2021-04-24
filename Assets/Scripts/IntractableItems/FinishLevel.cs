@@ -9,6 +9,7 @@ public class FinishLevel : MonoBehaviour
         if (collision.GetComponent<PlayerController>())
         {
             EventAggregator.RaiseOnFinishLevelEvent();
+            AudioManager.Instance.PlaySFX(SoundsFx.WinGame);
         }
     }
 }

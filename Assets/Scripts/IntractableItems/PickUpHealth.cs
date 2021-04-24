@@ -15,7 +15,7 @@ public class PickUpHealth : PickupableItem
         if (collision.TryGetComponent(out PlayerHealth player))
         {
             player.ModifyHealth(_healthAmount);
-            //TODO particles
+            AudioManager.Instance.PlaySFX(SoundsFx.HealthPotion);
             DisableItem(false);
             isActive = false;
         }

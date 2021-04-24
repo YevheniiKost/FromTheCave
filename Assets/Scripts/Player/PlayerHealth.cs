@@ -33,22 +33,30 @@ public class PlayerHealth : MonoBehaviour, ISaveState
 
     public void ModifyHealth(int amount)
     {
-        if (!IsCharacterDead && !GetComponent<PlayerCombat>().IsBlockUp)
+        if (!IsCharacterDead)
         {
-            if (_currentPlayerHealth == _maxHealth && amount > 0)
-                return;
+            if (!GetComponent<PlayerCombat>().IsBlockUp)
+            {
+                if (_currentPlayerHealth == _maxHealth && amount > 0)
+                    return;
 
-            if (amount > _maxHealth - _currentPlayerHealth)
-                amount = _maxHealth - _currentPlayerHealth;
+                if (amount > _maxHealth - _currentPlayerHealth)
+                    amount = _maxHealth - _currentPlayerHealth;
 
-            if (_currentPlayerHealth + amount <= 0)
-                StartDeathSequence();
+                if (_currentPlayerHealth + amount <= 0)
+                    StartDeathSequence();
 
-            if (amount < 0)
-                OnHit?.Invoke();
+                if (amount < 0)
+                {
+                    AudioManager.Instance.PlaySFX(SoundsFx.PlayerGetHit);
+                    OnHit?.Invoke();
+                }
 
-            _currentPlayerHealth += amount;
-            EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+                _currentPlayerHealth += amount;
+                EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+            }
+            else
+                AudioManager.Instance.PlaySFX(SoundsFx.ShieldHit);
         }
     }
 
@@ -80,6 +88,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
     private void StartDeathSequence()
     {
         IsCharacterDead = true;
+        AudioManager.Instance.PlaySFX(SoundsFx.CharacterDead);
         StartCoroutine(ExecuteAfterDelay(1f));
     }
 

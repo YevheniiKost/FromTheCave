@@ -143,7 +143,7 @@ public class EnemyMovement : MonoBehaviour
         if(_timeToNextAttack >= _attackRate)
         {
             OnAttack?.Invoke();
-           // Attack();
+            AudioManager.Instance.PlaySFX(SoundsFx.EnemyStrike);
             _timeToNextAttack = 0;
         }
 

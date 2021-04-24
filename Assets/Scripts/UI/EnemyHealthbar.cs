@@ -17,6 +17,7 @@ public class EnemyHealthbar : MonoBehaviour
 
     private void HandleHealthChanged(float pct)
     {
+        if(gameObject.activeSelf)
         StartCoroutine(ChangeHealth(pct));
     }
 
@@ -38,6 +39,7 @@ public class EnemyHealthbar : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+        yield return null;
 
     }
 }

@@ -13,7 +13,7 @@ public class PickUpAxe : PickupableItem
         if (collision.TryGetComponent(out PlayerCombat player))
         {
             player.GetAxe();
-            //TODO particles
+            AudioManager.Instance.PlaySFX(SoundsFx.GetWeapon);
             DisableItem(false);
             isActive = false;
         }

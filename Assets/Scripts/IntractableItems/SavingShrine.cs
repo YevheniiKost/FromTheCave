@@ -21,6 +21,7 @@ public class SavingShrine : MonoBehaviour
 
     private void SaveGame()
     {
+        AudioManager.Instance.PlaySFX(SoundsFx.SaveGame);
         StartCoroutine(ReloadShrineTimer());
         _saveParticles.Play();
         EventAggregator.RaiseOnSaveGameEvent();

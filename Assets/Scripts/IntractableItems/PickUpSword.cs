@@ -13,7 +13,7 @@ public class PickUpSword : PickupableItem
         if(collision.TryGetComponent(out PlayerCombat player))
         {
             player.GetSword();
-            //TODO particles
+            AudioManager.Instance.PlaySFX(SoundsFx.GetWeapon);
             DisableItem(false);
             isActive = false;
         }

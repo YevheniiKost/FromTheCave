@@ -10,19 +10,36 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private List<SoundFxData> _soundsFXList = new List<SoundFxData>();
     [SerializeField] private List<MusicData> _musicList = new List<MusicData>();
-    // Start is called before the first frame update
 
     public static AudioManager Instance;
 
+    public float MusicVolume = 1;
+    public float SoundsFXVolume = 1;
+
+    public bool IsMusicOff;
+    public bool IsSoundsOff;
+
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+
+       if (Instance != null)
+           Destroy(this.gameObject);
+       else
         Instance = this;
     }
 
+    private void Start()
+    {
+        MusicVolume = _musicSource.volume;
+        SoundsFXVolume = _soundFxSource.volume;
+        IsMusicOff = _musicSource.mute;
+        IsSoundsOff = _soundFxSource.mute;
+    }
+
+
     public void PlaySFX(SoundsFx soundsFx)
     {
-        //get neccessary sounds clip
-        // set clip and play
         var clip = GetSoundFXClip(soundsFx);
         _soundFxSource.PlayOneShot(clip);
     }
@@ -36,12 +53,26 @@ public class AudioManager : MonoBehaviour
     public void SetSoundFX(bool isOn)
     {
         _soundFxSource.mute = isOn;
+        IsSoundsOff = isOn;
     }
 
     public void SetMusic(bool isOn)
     {
-        StartCoroutine(MusicFadeOut(2f));
-        //_musicSource.mute = isOn;
+        //StartCoroutine(MusicFadeOut(2f));
+        _musicSource.mute = isOn;
+        IsMusicOff = isOn;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        _musicSource.volume = value;
+        MusicVolume = value;
+    }
+
+    public void SetFXVolume(float value)
+    {
+        _soundFxSource.volume = value;
+        SoundsFXVolume = value;
     }
 
     private AudioClip GetSoundFXClip(SoundsFx soundsFx)
@@ -77,15 +108,26 @@ public class AudioManager : MonoBehaviour
 
 public enum SoundsFx
 {
-    //Game
-    Booster,
-    Collect,
-    ColorBomb,
-    ReachedGoal,
     //UI
-    Button,
-    Lose,
-    Win
+    ButtonPointerEnter,
+    ButtonPressed,
+    //Game
+    CharacterDead,
+    WinGame,
+    SaveGame,
+    CollectCoin,
+    FallingStone,
+    GetWeapon, 
+    SwordStrike,
+    Throw,
+    Kick,
+    ShieldHit,
+    Footstep,
+    Jump,
+    AxeImpact,
+    PlayerGetHit,
+    EnemyStrike,
+    HealthPotion
 }
 
 public enum MusicType
