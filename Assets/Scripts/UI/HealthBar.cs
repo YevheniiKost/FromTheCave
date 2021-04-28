@@ -6,18 +6,17 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-
     private List<Transform> _heartsList = new List<Transform>();
 
     private void Awake()
     {
         FillHeartsArray();
-        EventAggregator.OnChangeHealth += ChangeHealth;
+        GameEvents.OnChangeHealth += ChangeHealth;
     }
 
     private void OnDestroy()
     {
-        EventAggregator.OnChangeHealth -= ChangeHealth;
+        GameEvents.OnChangeHealth -= ChangeHealth;
     }
 
     private void FillHeartsArray()

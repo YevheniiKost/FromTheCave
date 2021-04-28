@@ -37,7 +37,6 @@ public class AudioManager : MonoBehaviour
         IsSoundsOff = _soundFxSource.mute;
     }
 
-
     public void PlaySFX(SoundsFx soundsFx)
     {
         var clip = GetSoundFXClip(soundsFx);
@@ -58,7 +57,6 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusic(bool isOn)
     {
-        //StartCoroutine(MusicFadeOut(2f));
         _musicSource.mute = isOn;
         IsMusicOff = isOn;
     }
@@ -86,24 +84,6 @@ public class AudioManager : MonoBehaviour
         var musicData = _musicList.Find(musicfx => musicfx.Music == music);
         return musicData?.Clip;
     }
-
-    private IEnumerator MusicFadeOut(float duration = 0.5f)
-    {
-        var endValue = 0f;
-        var startValue = _musicSource.volume;
-        var timeCounter = 0f;
-        while (timeCounter < duration)
-        {
-            var normalizedTime = timeCounter / duration;
-
-            _musicSource.volume = Mathf.Lerp(startValue, endValue, normalizedTime);
-            timeCounter += Time.deltaTime;
-            yield return null;
-        }
-
-        _musicSource.volume = 0;
-    }
-
 }
 
 public enum SoundsFx

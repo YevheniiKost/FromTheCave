@@ -15,7 +15,6 @@ public class StalactiteTrap : MonoBehaviour
 
     private bool _isTriggered = false;
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerController>())
@@ -36,6 +35,7 @@ public class StalactiteTrap : MonoBehaviour
         yield return new WaitForSeconds(_shakeDuration);
 
         AudioManager.Instance.PlaySFX(SoundsFx.FallingStone);
+
         while (_stalactite != null)
         {
             _stalactite.position += Vector3.down * _fallingSpeed * Time.deltaTime;

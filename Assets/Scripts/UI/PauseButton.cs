@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent (typeof(Button))]
 public class PauseButton : MonoBehaviour
 {
     private Button _pauseButton;
@@ -16,6 +17,6 @@ public class PauseButton : MonoBehaviour
 
     private void PauseButtonClickHandler()
     {
-        EventAggregator.RaiseOnPauseGameEvent();
+        GameEvents.RaiseOnPauseGameEvent();
     }
 }

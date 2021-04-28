@@ -14,11 +14,10 @@ public class EnemyHealthbar : MonoBehaviour
         GetComponentInParent<EnemyHealth>().OnHealthPctChanged += HandleHealthChanged;
     }
 
-
     private void HandleHealthChanged(float pct)
     {
-        if(gameObject.activeSelf)
-        StartCoroutine(ChangeHealth(pct));
+        if (gameObject.activeSelf)
+            StartCoroutine(ChangeHealth(pct));
     }
 
     private IEnumerator ChangeHealth(float pct)
@@ -26,7 +25,7 @@ public class EnemyHealthbar : MonoBehaviour
         float preChangerPct = _foregroundImage.fillAmount;
         float elapsed = 0f;
 
-        while(elapsed < _updateSpeedSeconds)
+        while (elapsed < _updateSpeedSeconds)
         {
             elapsed += Time.deltaTime;
             _foregroundImage.fillAmount = Mathf.Lerp(preChangerPct, pct, elapsed / _updateSpeedSeconds);
@@ -35,7 +34,7 @@ public class EnemyHealthbar : MonoBehaviour
 
         _foregroundImage.fillAmount = pct;
 
-        if(pct <= 0)
+        if (pct <= 0)
         {
             this.gameObject.SetActive(false);
         }

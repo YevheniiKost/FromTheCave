@@ -77,19 +77,20 @@ public class EnemyMovement : MonoBehaviour
                 break;
             default:
                 _currentState = EnemyState.Idle;
-                    break;
+                break;
         }
         _timeToNextAttack += Time.deltaTime;
     }
 
     private void Patrolling()
     {
-        if(_currentWaypoint == _patrollingPointA)
-            if(Vector3.Distance(_patrollingPointA.transform.position, transform.position) <= _waypointTolerance )
+        if (_currentWaypoint == _patrollingPointA)
+            if (Vector3.Distance(_patrollingPointA.transform.position, transform.position) <= _waypointTolerance)
             {
                 _currentWaypoint = _patrollingPointB;
                 MoveToWaypoint(_currentWaypoint);
-            } else
+            }
+            else
             {
                 MoveToWaypoint(_currentWaypoint);
             }
@@ -120,7 +121,8 @@ public class EnemyMovement : MonoBehaviour
         if (leftHit || rightHit)
         {
             _currentState = EnemyState.ChasePlayer;
-        } else
+        }
+        else
         {
             _currentState = EnemyState.Patroling;
         }
@@ -128,7 +130,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void ChaseAndAttackPlayer()
     {
-        if(Vector3.Distance(_player.transform.position, transform.position) > _meeleAttackDistance)
+        if (Vector3.Distance(_player.transform.position, transform.position) > _meeleAttackDistance)
         {
             MoveToTarget(new Vector2(_player.transform.position.x, _player.transform.position.y));
         }
@@ -140,17 +142,15 @@ public class EnemyMovement : MonoBehaviour
 
     private void ProcessAttack()
     {
-       
-        if(_timeToNextAttack >= _attackRate)
+
+        if (_timeToNextAttack >= _attackRate)
         {
             OnAttack?.Invoke();
-            
+
             _timeToNextAttack = 0;
         }
 
     }
-
-  
 
     private void MoveToTarget(Vector2 target)
     {
@@ -158,9 +158,9 @@ public class EnemyMovement : MonoBehaviour
         targetDirection.y = 0f;
         _rb.velocity = targetDirection.normalized * _movingSpeed;
         if (targetDirection.x * _direction < 0f)
-            {
-                FlipCharacterDirection();
-            }
+        {
+            FlipCharacterDirection();
+        }
     }
 
     private void FlipCharacterDirection()

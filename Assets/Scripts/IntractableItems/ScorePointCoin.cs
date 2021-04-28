@@ -14,6 +14,4 @@ public class ScorePointCoin : PickupableItem
             isActive = false;
         }
     }
-
-    
 }

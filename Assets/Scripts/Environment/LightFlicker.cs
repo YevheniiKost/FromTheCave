@@ -5,28 +5,27 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightFlicker : MonoBehaviour
 {
-	public float amount;    //The amount of light flicker
-	public float speed;     //The speed of the flicker
+	[SerializeField] private float _amount;
+	[SerializeField] private float _speed;
 
-	Light2D localLight;       //Reference to the light component
-	float intensity;        //The collective intensity of the light component
-	float offset;           //An offset so all flickers are different
+	private Light2D _localLight;
+	private float _intensity;
+	private float _offset;
 
+	private void Awake()
+	{
+		_localLight = GetComponentInChildren<Light2D>();
+	}
 
 	void Start()
 	{
-		//Get a reference to the Light component on the child game object
-		localLight = GetComponentInChildren<Light2D>();
-
-		//Record the intensity and pick a random seed number to start
-		intensity = localLight.intensity;
-		offset = Random.Range(0, 10000);
+		_intensity = _localLight.intensity;
+		_offset = Random.Range(0, 10000);
 	}
 
 	void Update()
 	{
-		//Using perlin noise, determine a random intensity amount
-		float amt = Mathf.PerlinNoise(Time.time * speed + offset, Time.time * speed + offset) * amount;
-		localLight.intensity = intensity + amt;
+		float amount = Mathf.PerlinNoise(Time.time * _speed + _offset, Time.time * _speed + _offset) * _amount;
+		_localLight.intensity = _intensity + amount;
 	}
 }

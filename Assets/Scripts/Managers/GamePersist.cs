@@ -1,32 +1,35 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GamePersist : MonoBehaviour
 {
+    private IEnumerable<ISaveState> _savableObjects;
+
     private void Awake()
     {
-        EventAggregator.OnSaveGame += Save;
-        EventAggregator.OnLoadGame += Load;
+        GameEvents.OnSaveGame += Save;
+        GameEvents.OnLoadGame += Load;
     }
 
     private void OnDestroy()
     {
-        EventAggregator.OnSaveGame -= Save;
-        EventAggregator.OnLoadGame -= Load;
+        GameEvents.OnSaveGame -= Save;
+        GameEvents.OnLoadGame -= Load;
     }
 
-    [ContextMenu("Load")]
     private void Load()
     {
-        foreach (ISaveState persist in FindObjectsOfType<MonoBehaviour>().OfType<ISaveState>())
+        foreach (ISaveState persist in _savableObjects)
         {
             persist.Load();
         }
     }
-    [ContextMenu("Save")]
+
     private void Save()
     {
-        foreach (var persist in FindObjectsOfType<MonoBehaviour>().OfType<ISaveState>())
+        _savableObjects = FindObjectsOfType<MonoBehaviour>().OfType<ISaveState>();
+        foreach (var persist in _savableObjects)
         {
             persist.Save();
         }

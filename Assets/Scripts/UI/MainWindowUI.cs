@@ -37,7 +37,7 @@ public class MainWindowUI : MonoBehaviour
 
     private void OnStartButtonClickHandler()
     {
-        EventAggregator.RaiseOnGameStartEvent();
+        GameEvents.RaiseOnGameStartEvent();
     }
 
     private void CloseApplication()

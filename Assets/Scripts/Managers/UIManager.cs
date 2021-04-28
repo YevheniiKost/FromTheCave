@@ -34,11 +34,11 @@ public class UIManager : MonoBehaviour
     #region HandleEvents
     private void SubscribeToEvents()
     {
-        EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
-        EventAggregator.OnLoadGame += LoadGame;
-        EventAggregator.OnFinishLevel += FinishLevel;
-        EventAggregator.OnGamePause += PauseGame;
-        EventAggregator.OnGameUnpause += UnpauseGame;
+        GameEvents.OnPlayerDeath += ProcessPlayerDeath;
+        GameEvents.OnLoadGame += LoadGame;
+        GameEvents.OnFinishLevel += FinishLevel;
+        GameEvents.OnGamePause += PauseGame;
+        GameEvents.OnGameUnpause += UnpauseGame;
 
         MainWindowUI.OnMainWindowActive += GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive += GetOptionsWindow;
@@ -50,11 +50,11 @@ public class UIManager : MonoBehaviour
 
     private void UnSubscribeToEvents()
     {
-        EventAggregator.OnPlayerDeath -= ProcessPlayerDeath;
-        EventAggregator.OnLoadGame -= LoadGame;
-        EventAggregator.OnFinishLevel -= FinishLevel;
-        EventAggregator.OnGamePause -= PauseGame;
-        EventAggregator.OnGameUnpause -= UnpauseGame;
+        GameEvents.OnPlayerDeath -= ProcessPlayerDeath;
+        GameEvents.OnLoadGame -= LoadGame;
+        GameEvents.OnFinishLevel -= FinishLevel;
+        GameEvents.OnGamePause -= PauseGame;
+        GameEvents.OnGameUnpause -= UnpauseGame;
 
         MainWindowUI.OnMainWindowActive -= GetMainWindow;
         OptionsWindowUI.OnOptionsWindowActive -= GetOptionsWindow;

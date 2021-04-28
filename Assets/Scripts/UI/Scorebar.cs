@@ -8,7 +8,6 @@ public class Scorebar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText;
 
-
     private void Awake()
     {
         SubscribeToEvents();
@@ -26,12 +25,12 @@ public class Scorebar : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        EventAggregator.OnChangeScore += UpdateScoreText;
+        GameEvents.OnChangeScore += UpdateScoreText;
     }
 
     private void UnsubscribeToEvents()
     {
-        EventAggregator.OnChangeScore -= UpdateScoreText;
+        GameEvents.OnChangeScore -= UpdateScoreText;
     }
 
     private void UpdateScoreText(int score)

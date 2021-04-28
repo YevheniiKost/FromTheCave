@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour, ISaveState
     public void GetScore()
     {
         CurrentScores++;
-        EventAggregator.RaiseOnChangeScoreEvent(CurrentScores);
+        GameEvents.RaiseOnChangeScoreEvent(CurrentScores);
     }
 
     public void Save()
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         {
             transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
             CurrentScores = PlayerPrefs.GetInt("PlayerScore");
-            EventAggregator.RaiseOnChangeScoreEvent(CurrentScores);
+            GameEvents.RaiseOnChangeScoreEvent(CurrentScores);
         }
     }
     private void Awake()

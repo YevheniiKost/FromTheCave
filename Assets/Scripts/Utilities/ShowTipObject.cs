@@ -7,6 +7,7 @@ public class ShowTipObject : MonoBehaviour
 {
     [TextArea][SerializeField]
     private string _tipText;
+
     private bool _wasShow = false;
 
     private void OnTriggerEnter2D(Collider2D collision)

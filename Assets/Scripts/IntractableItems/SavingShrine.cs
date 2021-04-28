@@ -14,8 +14,8 @@ public class SavingShrine : MonoBehaviour
     {
         if (collision.GetComponent<PlayerController>())
         {
-            if(_readyToSave)
-            SaveGame();
+            if (_readyToSave)
+                SaveGame();
         }
     }
 
@@ -24,7 +24,7 @@ public class SavingShrine : MonoBehaviour
         AudioManager.Instance.PlaySFX(SoundsFx.SaveGame);
         StartCoroutine(ReloadShrineTimer());
         _saveParticles.Play();
-        EventAggregator.RaiseOnSaveGameEvent();
+        GameEvents.RaiseOnSaveGameEvent();
     }
 
     private IEnumerator ReloadShrineTimer()

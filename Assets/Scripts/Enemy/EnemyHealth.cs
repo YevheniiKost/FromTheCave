@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent (typeof(Rigidbody2D)), RequireComponent (typeof(CapsuleCollider2D))]
 public class EnemyHealth : MonoBehaviour, ISaveState
 {
     public delegate void Action();
@@ -28,8 +30,8 @@ public class EnemyHealth : MonoBehaviour, ISaveState
         _currentHealth = PlayerPrefs.GetFloat($"Health-{_enemyName}");
         IsDead = PlayerPrefs.GetInt($"IsDead-{_enemyName}") == 1;
 
-        if(!IsDead)
-        CallHealthChange();
+        if (!IsDead)
+            CallHealthChange();
     }
 
     public void GetHit(int amount)
@@ -37,6 +39,10 @@ public class EnemyHealth : MonoBehaviour, ISaveState
         if (!IsDead)
         {
             _currentHealth -= amount;
+
+            if (_currentHealth <= 0)
+                StartDeath();
+
             CallHealthChange();
             OnGetHit?.Invoke();
         }
@@ -50,21 +56,13 @@ public class EnemyHealth : MonoBehaviour, ISaveState
 
     private void Awake()
     {
-        _enemyName = transform.parent.name;    
+        _enemyName = transform.parent.name;
     }
 
     void Start()
     {
         _currentHealth = _startHealth;
         IsDead = false;
-    }
-
-    void Update()
-    {
-        if(_currentHealth <= 0)
-        {
-            StartDeath();
-        }
     }
 
     private void StartDeath()
@@ -76,5 +74,4 @@ public class EnemyHealth : MonoBehaviour, ISaveState
         GetComponent<CapsuleCollider2D>().enabled = false;
     }
 
-   
 }

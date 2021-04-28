@@ -19,7 +19,7 @@ public class PauseWindowUI : MonoBehaviour
 
     private void OnContinueButtonClickHandler()
     {
-        EventAggregator.RaiseOnUnpaseGameEvent();
+        GameEvents.RaiseOnUnpaseGameEvent();
     }
 
     private void OnSettingsButtonClickHandler()
@@ -34,7 +34,7 @@ public class PauseWindowUI : MonoBehaviour
 
     private void ReturnToMainMenu()
     {
-        EventAggregator.RaiseOnReturnToMainMenu();
+        GameEvents.RaiseOnReturnToMainMenu();
     }
 
     private void Start()

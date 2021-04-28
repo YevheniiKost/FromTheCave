@@ -13,7 +13,6 @@ public class LoadingScreen : MonoBehaviour
         StartCoroutine(LoadingDotsCycle());
         StartCoroutine(LoadAsyncOperation());
     }
-
    
     private IEnumerator LoadAsyncOperation()
     {

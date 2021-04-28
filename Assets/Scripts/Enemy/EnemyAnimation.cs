@@ -14,7 +14,6 @@ public class EnemyAnimation : MonoBehaviour
     private int _isDeadParamID;
 
     private Rigidbody2D _rb;
-    
 
     private void Awake()
     {

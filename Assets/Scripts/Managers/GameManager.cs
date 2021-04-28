@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex == 1)
         {
             if (!IsGamePaused)
-                EventAggregator.RaiseOnPauseGameEvent();
+                GameEvents.RaiseOnPauseGameEvent();
             else
-                EventAggregator.RaiseOnUnpaseGameEvent();
+                GameEvents.RaiseOnUnpaseGameEvent();
         }
     }
 
@@ -52,24 +52,24 @@ public class GameManager : MonoBehaviour
     #region HandleEvents
     private void SubscribeOnEvents()
     {
-        EventAggregator.OnPlayerDeath += ProcessPlayerDeath;
-        EventAggregator.OnRestartLevel += RestartLevel;
-        EventAggregator.OnFinishLevel += FinishLevel;
-        EventAggregator.OnStartGame += StartGame;
-        EventAggregator.OnGamePause += PauseGame;
-        EventAggregator.OnGameUnpause += UnpauseGame;
-        EventAggregator.OnReturnToMainMenu += ReturnToMainMenu;
+        GameEvents.OnPlayerDeath += ProcessPlayerDeath;
+        GameEvents.OnRestartLevel += RestartLevel;
+        GameEvents.OnFinishLevel += FinishLevel;
+        GameEvents.OnStartGame += StartGame;
+        GameEvents.OnGamePause += PauseGame;
+        GameEvents.OnGameUnpause += UnpauseGame;
+        GameEvents.OnReturnToMainMenu += ReturnToMainMenu;
     }
 
     private void UnsubscribeToEvents()
     {
-        EventAggregator.OnPlayerDeath -= ProcessPlayerDeath;
-        EventAggregator.OnRestartLevel -= RestartLevel;
-        EventAggregator.OnFinishLevel -= FinishLevel;
-        EventAggregator.OnStartGame -= StartGame;
-        EventAggregator.OnGamePause -= PauseGame;
-        EventAggregator.OnGameUnpause -= UnpauseGame;
-        EventAggregator.OnReturnToMainMenu -= ReturnToMainMenu;
+        GameEvents.OnPlayerDeath -= ProcessPlayerDeath;
+        GameEvents.OnRestartLevel -= RestartLevel;
+        GameEvents.OnFinishLevel -= FinishLevel;
+        GameEvents.OnStartGame -= StartGame;
+        GameEvents.OnGamePause -= PauseGame;
+        GameEvents.OnGameUnpause -= UnpauseGame;
+        GameEvents.OnReturnToMainMenu -= ReturnToMainMenu;
     }
 
     #endregion
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(GameConstants.SceneNames.LoadingSceneName);
         AudioManager.Instance.PlayMusic(MusicType.Game);
     }
 
@@ -102,25 +102,26 @@ public class GameManager : MonoBehaviour
     private void RestartLevel()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(GameConstants.SceneNames.MainLevelSceneName);
     }
 
     private void ReturnToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(GameConstants.SceneNames.MainMenuSceneName);
         Time.timeScale = 1;
         AudioManager.Instance.PlayMusic(MusicType.MainMenu);
     }
 
     private void ProcessPlayerDeath()
     {
-       // SceneManager.LoadScene(0);
+        // SceneManager.LoadScene(0);
     }
 
     private void DisablePlayerControls()
     {
         _player = FindObjectOfType<PlayerController>();
         _player.enabled = false;
-        _player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        if (_player.GetComponent<Rigidbody2D>())
+            _player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
     }
 }

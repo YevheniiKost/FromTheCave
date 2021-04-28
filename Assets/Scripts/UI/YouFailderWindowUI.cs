@@ -34,16 +34,16 @@ public class YouFailderWindowUI : MonoBehaviour
 
     private void OnTryAgainButtonClickHandler()
     {
-        EventAggregator.RaiseOnLoadGameEvent();
+        GameEvents.RaiseOnLoadGameEvent();
     }
 
     private void RestartLevel()
     {
-        EventAggregator.RaiseOnRestartLevelEvent();
+        GameEvents.RaiseOnRestartLevelEvent();
     }
 
     private void ReturnToMainMenu()
     {
-        EventAggregator.RaiseOnReturnToMainMenu();
+        GameEvents.RaiseOnReturnToMainMenu();
     }
 }

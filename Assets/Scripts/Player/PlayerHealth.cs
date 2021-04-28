@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
     {
         _currentPlayerHealth = PlayerPrefs.GetInt("PlayerHealth");
         IsCharacterDead = JsonUtility.FromJson<bool>(PlayerPrefs.GetString("IsPlayerDead"));
-        EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+        GameEvents.RaiseOnChangeHealthEvent(_currentPlayerHealth);
     }
 
     public void ModifyHealth(int amount)
@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
                 }
 
                 _currentPlayerHealth += amount;
-                EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+                GameEvents.RaiseOnChangeHealthEvent(_currentPlayerHealth);
             }
             else
                 AudioManager.Instance.PlaySFX(SoundsFx.ShieldHit);
@@ -73,7 +73,7 @@ public class PlayerHealth : MonoBehaviour, ISaveState
     {
         IsCharacterDead = false;
         _currentPlayerHealth = _startHealth;
-        EventAggregator.RaiseOnChangeHealthEvent(_currentPlayerHealth);
+        GameEvents.RaiseOnChangeHealthEvent(_currentPlayerHealth);
     }
 
     private void Update()
@@ -95,6 +95,6 @@ public class PlayerHealth : MonoBehaviour, ISaveState
     private IEnumerator ExecuteAfterDelay(float time)
     {
         yield return new WaitForSeconds(time);
-        EventAggregator.RaiseOnPlayerDeathEvent();
+        GameEvents.RaiseOnPlayerDeathEvent();
     }
 }

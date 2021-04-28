@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ScrollingMyst : MonoBehaviour
 {
-    public float ScrollSpeed = -0.5f;
+    [SerializeField] private float _scrollSpeed = -0.5f;
     private Vector2 _savedOffset;
     private Renderer _renderer;
 
-    private void Start()
+    private void Awake()
     {
         _renderer = GetComponent<Renderer>();
         _savedOffset = _renderer.material.mainTextureOffset;
@@ -16,7 +16,7 @@ public class ScrollingMyst : MonoBehaviour
 
     private void Update()
     {
-        float x = Mathf.Repeat(Time.time * ScrollSpeed, 1);
+        float x = Mathf.Repeat(Time.time * _scrollSpeed, 1);
         Vector2 offset = new Vector2(x, _savedOffset.y);
         _renderer.material.mainTextureOffset = offset;
     }

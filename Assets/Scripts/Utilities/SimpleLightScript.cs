@@ -9,6 +9,4 @@ public class SimpleLightScript : MonoBehaviour
     {
         GetComponent<Light2D>().intensity = .5f;
     }
-
-
 }

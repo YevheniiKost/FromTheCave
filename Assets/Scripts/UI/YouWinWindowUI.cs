@@ -31,6 +31,6 @@ public class YouWinWindowUI : MonoBehaviour
 
     private void OnReturnButtonClickHandler()
     {
-        EventAggregator.RaiseOnReturnToMainMenu();
+        GameEvents.RaiseOnReturnToMainMenu();
     }
 }
