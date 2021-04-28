@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 [RequireComponent(typeof(CapsuleCollider2D)), RequireComponent(typeof(SpriteRenderer))]
 public class KeyToDoor : MonoBehaviour
@@ -14,6 +15,12 @@ public class KeyToDoor : MonoBehaviour
         {
             _isActivated = true;
             _door.OpenDoor();
+
+            AudioManager.Instance.PlaySFX(SoundsFx.GetKey);
+
+            if (GetComponentInChildren<Light2D>())
+                GetComponentInChildren<Light2D>().enabled = false;
+
             GetComponent<CapsuleCollider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
         }

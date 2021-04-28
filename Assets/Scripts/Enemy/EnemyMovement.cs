@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -9,20 +10,24 @@ public class EnemyMovement : MonoBehaviour
 
     public event Atcion OnAttack;
 
+    [Header("Moving and attack")]
     [SerializeField] private float _movingSpeed = 1f;
     [SerializeField] private int _attackDamage = 1;
     [SerializeField] private float _attackRate = .5f;
-
     [SerializeField] private float _meeleAttackDistance = 1f;
     [SerializeField] private float _chasingDistance = 5f;
 
+    [Header("Behavior")]
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _patrollingPointA;
     [SerializeField] private Transform _patrollingPointB;
     [SerializeField] private float _waypointTolerance;
     [SerializeField] private LayerMask _playerMask;
-
     [SerializeField] private float _playerDetectionOffset = 1f;
+    [SerializeField] private float _onHitThrowingDistance = 1f;
+    [SerializeField] private float _onThrowDuration = .5f;
+
+    [Header("Developer")]
     [SerializeField] private bool _drawDebugRaycasts = true;
 
     private Transform _currentWaypoint;
@@ -32,6 +37,8 @@ public class EnemyMovement : MonoBehaviour
     private int _direction = 1;
     private float _originalScale;
     private float _timeToNextAttack;
+
+    private bool _isThrowingBack;
 
     // Animation event
     public void Attack()
@@ -52,6 +59,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = FindObjectOfType<PlayerHealth>();
+        GetComponent<EnemyHealth>().OnGetHit += ThrowAwayOnHit;
     }
 
     private void Start()
@@ -81,6 +89,16 @@ public class EnemyMovement : MonoBehaviour
         }
         _timeToNextAttack += Time.deltaTime;
     }
+
+    #region throw back
+    private void ThrowAwayOnHit()
+    {
+        _isThrowingBack = true;
+        transform.DOBlendableLocalMoveBy(new Vector3(_onHitThrowingDistance * -_direction, 0, 0), _onThrowDuration).SetEase(Ease.Linear).OnComplete(NoThrowingBack);
+    }
+    
+    private void NoThrowingBack() => _isThrowingBack = false;
+    #endregion
 
     private void Patrolling()
     {
@@ -130,7 +148,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void ChaseAndAttackPlayer()
     {
-        if (Vector3.Distance(_player.transform.position, transform.position) > _meeleAttackDistance)
+        if (Vector3.Distance(_player.transform.position, transform.position) > _meeleAttackDistance &&  !_isThrowingBack)
         {
             MoveToTarget(new Vector2(_player.transform.position.x, _player.transform.position.y));
         }
@@ -143,7 +161,7 @@ public class EnemyMovement : MonoBehaviour
     private void ProcessAttack()
     {
 
-        if (_timeToNextAttack >= _attackRate)
+        if (_timeToNextAttack >= _attackRate && !_isThrowingBack)
         {
             OnAttack?.Invoke();
 

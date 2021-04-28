@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tryAgainFromCheckpointButton: {fileID: 1089663171}
   _restartLevelButton: {fileID: 830110681}
+  _returnToMainMenuButton: {fileID: 0}
 --- !u!114 &12015480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4101,7 +4102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497f5ff04217b7245acbf8f5a025dd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxCamera: {fileID: 519420034}
+  _parallaxCamera: {fileID: 0}
 --- !u!1001 &595041370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5668,7 +5669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &973738938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5905,7 +5906,7 @@ TilemapRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 4.3, y: 2.2, z: 0}
+  m_ChunkCullingBounds: {x: 4.7173915, y: 2.4347825, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -6008,7 +6009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20afd781e313c3a42b1335d22f16401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.4
+  _parallaxFactor: 0
 --- !u!4 &1029647260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6109345127513269139, guid: 388fe272fb984784daa67f175b2342e7,
@@ -7722,7 +7723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20afd781e313c3a42b1335d22f16401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -0.2
+  _parallaxFactor: 0
 --- !u!1 &1224340364
 GameObject:
   m_ObjectHideFlags: 0
@@ -8192,7 +8193,7 @@ TilemapRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 4.3, y: 1.9000001, z: 0}
+  m_ChunkCullingBounds: {x: 4.7173915, y: 2.1086957, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -8327,7 +8328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20afd781e313c3a42b1335d22f16401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.2
+  _parallaxFactor: 0
 --- !u!4 &1345791439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 91427852657612181, guid: 59e10197c8f73e946a2c561dc88ffee7,
@@ -9670,7 +9671,7 @@ TilemapRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 4.3, y: 2.2, z: 0}
+  m_ChunkCullingBounds: {x: 4.7173915, y: 2.4347825, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -9773,7 +9774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20afd781e313c3a42b1335d22f16401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.3
+  _parallaxFactor: 0
 --- !u!1 &1465947206
 GameObject:
   m_ObjectHideFlags: 0
@@ -10607,6 +10608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f2e5367f68f12428fddafab28f26f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsGamePaused: 0
 --- !u!4 &1713518555
 Transform:
   m_ObjectHideFlags: 0
@@ -10645,7 +10647,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e3c988586a89d4eb6bd506c3f7885c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _youFailedWindow: {fileID: 12015479}
+  MainWindow: {fileID: 0}
+  OptionsWindow: {fileID: 0}
+  YouFailedWindow: {fileID: 0}
+  MessageWindow: {fileID: 0}
+  YouWinWindow: {fileID: 0}
+  PauseWindow: {fileID: 0}
 --- !u!1 &1728422028
 GameObject:
   m_ObjectHideFlags: 3
@@ -16317,23 +16324,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1465947207}
     m_Modifications:
-    - target: {fileID: 2071135574, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
-      propertyPath: IsHasAxe
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2071135574, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
-      propertyPath: _meeleAttackRate
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2071135574, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
-      propertyPath: _projectilePrefab
-      value: 
-      objectReference: {fileID: 7881815567387736028, guid: a1f848a1b2c3f6b49a7058a7b987ccee,
-        type: 3}
-    - target: {fileID: 2071135574, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
-      propertyPath: _swordAttackRange
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 74663588211003537, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
       propertyPath: m_RootOrder
@@ -16389,31 +16379,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 74663588211003538, guid: db9d72e6089d9dc4287374689d6cd01e,
-        type: 3}
-      propertyPath: _ladderMask.m_Bits
-      value: 4096
-      objectReference: {fileID: 0}
     - target: {fileID: 74663588211003540, guid: db9d72e6089d9dc4287374689d6cd01e,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 74663588211003540, guid: db9d72e6089d9dc4287374689d6cd01e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 74663588211003543, guid: db9d72e6089d9dc4287374689d6cd01e,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 3579086197181138518, guid: db9d72e6089d9dc4287374689d6cd01e,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db9d72e6089d9dc4287374689d6cd01e, type: 3}
 --- !u!1001 &91427852499064116

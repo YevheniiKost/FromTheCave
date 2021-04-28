@@ -20,15 +20,13 @@ public class LockedDoor : MonoBehaviour
     {
         if (!_isOpened)
         {
-            //GetComponent<BoxCollider2D>().enabled = false;
-            //GetComponent<SpriteRenderer>().enabled = false;
             _isOpened = true;
         }
     }
 
     public void PlayerOpenDoorAnimation()
     {
-        // gameObject.transform.DOMoveX(_openMovementDistance, _openDuration, true);
         gameObject.transform.DOLocalMoveX(_openMovementDistance, _openDuration).SetEase(Ease.Flash);
+        AudioManager.Instance.PlaySFX(SoundsFx.OpenDoor);
     }
 }

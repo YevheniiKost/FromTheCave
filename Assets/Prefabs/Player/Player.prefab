@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2071135574}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +53,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.68}
-  m_Size: {x: 0.54, y: 1.49}
+  m_Size: {x: 0.54, y: 1.36}
   m_Direction: 0
 --- !u!50 &74663588211003536
 Rigidbody2D:
@@ -93,7 +93,8 @@ MonoBehaviour:
   _flightSpeedReduser: 0.8
   _ladderClimbingSpeed: 2
   _groundDistance: 0.4
-  _footOffeset: 0.16
+  _footOffeset: 0.2
+  _coyoteDuration: 0.5
   _groundMask:
     serializedVersion: 2
     m_Bits: 768
@@ -101,7 +102,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   _drawDebugRaycasts: 1
-  IsOnGround: 0
+  IsOnGround: 1
   IsClimbing: 0
   CurrentScores: 0
 --- !u!114 &74663588211003549
@@ -161,7 +162,7 @@ MonoBehaviour:
   _rangeDamage: 30
   _kickAttackRange: 0.3
   _swordAttackRange: 0.8
-  _meeleAttackRate: 0.2
+  _meeleAttackRate: 0.8
   _rangeAttaclRate: 1
   _enemyLayer:
     serializedVersion: 2
@@ -169,7 +170,8 @@ MonoBehaviour:
   _attackPoint: {fileID: 6459458758883190601}
   _swordAnimController: {fileID: 22100000, guid: 9cd9d29379a1f1743a5b2e60c993328c,
     type: 2}
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: 7881815567387736028, guid: a1f848a1b2c3f6b49a7058a7b987ccee,
+    type: 3}
   IsHasSword: 0
   IsHasAxe: 0
   IsBlockUp: 0
@@ -254,7 +256,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

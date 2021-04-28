@@ -9,5 +9,6 @@ public static class GameConstants
         public const string MainMenuSceneName = "MainMenu_scene";
         public const string LoadingSceneName = "LoadingScreen_scene";
         public const string MainLevelSceneName = "MainLevel_scene";
+        public const string StartSceneName = "StartScene";
     }
 }

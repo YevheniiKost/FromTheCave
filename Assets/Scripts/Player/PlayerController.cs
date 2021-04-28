@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, ISaveState
     [Header("Environment check properties")]
     [SerializeField] private float _groundDistance = 1f;
     [SerializeField] private float _footOffeset = 1f;
+    [SerializeField] private float _coyoteDuration = .05f;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private LayerMask _ladderMask;
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour, ISaveState
     private int _direction = 1;
     private float _originalScale;
     private float _originalGravityScale;
+    private float _coyoteTime;
 
     private Rigidbody2D rb;
     private CapsuleCollider2D _collider;
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         GameEvents.RaiseOnChangeScoreEvent(CurrentScores);
     }
 
+    #region Saving
     public void Save()
     {
         var jsonPosition = JsonUtility.ToJson(transform.position);
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour, ISaveState
             GameEvents.RaiseOnChangeScoreEvent(CurrentScores);
         }
     }
+    #endregion
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -147,11 +152,14 @@ public class PlayerController : MonoBehaviour, ISaveState
         {
             rb.velocity = Vector2.zero;
         }
+
+        if (IsOnGround)
+            _coyoteTime = Time.time + _coyoteDuration;
     }
 
     private void Jumping()
     {
-        if (IsOnGround && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.1f)
+        if ((IsOnGround || _coyoteTime > Time.time) && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.1f)
         {
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             AudioManager.Instance.PlaySFX(SoundsFx.Jump);

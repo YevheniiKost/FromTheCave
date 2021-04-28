@@ -14,12 +14,12 @@ public class PlayerInput : MonoBehaviour
 
     private bool _readyToClear;
 
-    public float HorizontalInput { get => _horizontalInput; private set => _ = _horizontalInput; }
-    public float VerticalInput { get => _verticalInput; private set => _ = _verticalInput; }
-    public bool JumpInput { get => _jump; private set => _ = _jump; }
-    public bool Strike { get => _strike;private set => _ = _strike; }
-    public bool RangeStrike { get => _rangeStrike; private set => _ = _rangeStrike; }
-    public bool Block { get => _block; private set => _ = _block; }
+    public float HorizontalInput => _horizontalInput;
+    public float VerticalInput  => _verticalInput;
+    public bool JumpInput => _jump;
+    public bool Strike  => _strike;
+    public bool RangeStrike => _rangeStrike;
+    public bool Block => _block;
 
 
 

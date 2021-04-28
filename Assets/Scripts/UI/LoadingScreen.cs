@@ -16,7 +16,7 @@ public class LoadingScreen : MonoBehaviour
    
     private IEnumerator LoadAsyncOperation()
     {
-        AsyncOperation gameLevel = SceneManager.LoadSceneAsync(1);
+        AsyncOperation gameLevel = SceneManager.LoadSceneAsync(GameConstants.SceneNames.MainLevelSceneName);
 
         while(gameLevel.progress < 1)
         {

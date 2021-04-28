@@ -302,6 +302,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   _playerDetectionOffset: 1
+  _onHitThrowingDistance: 0.7
+  _onThrowDuration: 0.2
   _drawDebugRaycasts: 1
 --- !u!114 &4548195084964629715
 MonoBehaviour:
