@@ -109,7 +109,8 @@ public enum SoundsFx
     EnemyStrike,
     HealthPotion,
     GetKey,
-    OpenDoor
+    OpenDoor,
+    SwordImpact
 }
 
 public enum MusicType

@@ -14,13 +14,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        SubscribeOnEvents();
         DontDestroyOnLoad(this.gameObject);
 
         if (Instance != null)
             Destroy(this.gameObject);
         else
             Instance = this;
+
+        SubscribeOnEvents();
     }
 
     private void Start()
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void ProcessEscButton()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex == 1)
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == GameConstants.SceneNames.MainLevelSceneName)
         {
             if (!IsGamePaused)
                 GameEvents.RaiseOnPauseGameEvent();

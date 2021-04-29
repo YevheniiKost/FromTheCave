@@ -75,10 +75,7 @@ public class PlayerController : MonoBehaviour, ISaveState
         _originalGravityScale = rb.gravityScale;
     }
 
-    void Update()
-    {
-        Jumping();
-    }
+    void Update() => Jumping();
 
     private void FixedUpdate()
     {
@@ -86,34 +83,22 @@ public class PlayerController : MonoBehaviour, ISaveState
         GroundMovement();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        ClimbingTheLadder(collision);
-    }
+    private void OnTriggerStay2D(Collider2D collision) => ClimbingTheLadder(collision);
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
-        {
             IsClimbing = false;
-        }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        ChangePlatformProperties(collision);
-    }
+    private void OnCollisionStay2D(Collision2D collision) => ChangePlatformProperties(collision);
 
     private void ChangePlatformProperties(Collision2D collision)
     {
        if (IsClimbing && input.VerticalInput < 0)
-       {
             ChangeRotationalOffcetOfPlatforms(180, collision);
-       }
        else 
-       {
             ChangeRotationalOffcetOfPlatforms(0, collision);
-       }
     }
 
     private void ChangeRotationalOffcetOfPlatforms(float degrees, Collision2D collision)
@@ -159,8 +144,9 @@ public class PlayerController : MonoBehaviour, ISaveState
 
     private void Jumping()
     {
-        if ((IsOnGround || _coyoteTime > Time.time) && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp && rb.velocity.y <= 0.1f)
+        if ((IsOnGround || _coyoteTime > Time.time) && input.JumpInput && !IsClimbing && !GetComponent<PlayerCombat>().IsBlockUp)
         {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             AudioManager.Instance.PlaySFX(SoundsFx.Jump);
         }

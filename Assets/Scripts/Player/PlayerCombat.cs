@@ -71,6 +71,7 @@ public class PlayerCombat : MonoBehaviour, ISaveState
             if (enemy.TryGetComponent(out EnemyHealth enemyHit))
             {
                 enemyHit.GetHit(_currentDamage);
+                AudioManager.Instance.PlaySFX(SoundsFx.SwordImpact);
                 return;
             }
         }

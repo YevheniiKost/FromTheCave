@@ -94,7 +94,7 @@ MonoBehaviour:
   _ladderClimbingSpeed: 2
   _groundDistance: 0.4
   _footOffeset: 0.2
-  _coyoteDuration: 0.5
+  _coyoteDuration: 0.05
   _groundMask:
     serializedVersion: 2
     m_Bits: 768

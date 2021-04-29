@@ -45,6 +45,8 @@ public class EnemyHealth : MonoBehaviour, ISaveState
 
             CallHealthChange();
             OnGetHit?.Invoke();
+
+            
         }
     }
 

@@ -3321,6 +3321,8 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 838d5bae489771a4aafccfb15bc56a8c, type: 3}
   - SoundFx: 19
     Clip: {fileID: 8300000, guid: 072c73cb598fe794498ed251fd908d7b, type: 3}
+  - SoundFx: 20
+    Clip: {fileID: 8300000, guid: 9240210304827bb488e159f9f252ebb2, type: 3}
   _musicList:
   - Music: 0
     Clip: {fileID: 8300000, guid: 27ae589d4af618948ad65f4a5f4215f4, type: 3}

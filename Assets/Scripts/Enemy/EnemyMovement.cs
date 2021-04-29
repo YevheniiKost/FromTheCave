@@ -21,6 +21,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _patrollingPointA;
     [SerializeField] private Transform _patrollingPointB;
+    [SerializeField] private float _maxDistantFromPatrollingPoint = 1f;
     [SerializeField] private float _waypointTolerance;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private float _playerDetectionOffset = 1f;
@@ -90,7 +91,7 @@ public class EnemyMovement : MonoBehaviour
         _timeToNextAttack += Time.deltaTime;
     }
 
-    #region throw back
+    #region Throw back
     private void ThrowAwayOnHit()
     {
         _isThrowingBack = true;

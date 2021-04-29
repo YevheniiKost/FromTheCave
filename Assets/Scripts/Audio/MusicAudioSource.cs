@@ -9,10 +9,8 @@ public class MusicAudioSource : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         if (Instance != null)
-        {
             Destroy(this.gameObject);
-        }
-
-         Instance = this;
+        else
+            Instance = this;
     }
 }
